@@ -22,7 +22,7 @@ O documento segue os seis itens pedidos para a primeira entrega, na mesma ordem 
 | Item pedido | Seção | Arquivos de apoio no repositório |
 |---|---|---|
 | Proposta e estrutura inicial das telas | 1 | `entrega-1/telas/`, `planta/`, `frontend-3d/FRONTEND-3D.md` |
-| Documentação inicial do projeto | 2 | `REQUISITOS.md`, `validacao-camera/` |
+| Documentação inicial do projeto | 2 | `REQUISITOS.md` |
 | Linguagem de programação escolhida | 3 | |
 | Arquitetura proposta | 4 | |
 | Plataforma e tecnologias adotadas | 5 | `frontend-3d/FRONTEND-3D.md` |
@@ -165,7 +165,6 @@ Limites do teste:
 - Os números não foram conferidos contra contagem manual.
 - A estimativa de pessoas distintas (33) tende a estar inflada. O projeto não usa essa medida.
 
-Scripts e resultados estão em `validacao-camera/` (`contar_pessoas.py`, `mapa_calor_camera.py`, `mapa_calor.json`, `mapa_calor_2.json`).
 
 ### Próximos passos até a entrega final
 
@@ -188,8 +187,7 @@ Scripts e resultados estão em `validacao-camera/` (`contar_pessoas.py`, `mapa_c
 
 - `REQUISITOS.md`: requisitos completos, algoritmo detalhado, riscos e plano de trabalho.
 - `frontend-3d/FRONTEND-3D.md`: desenho da interface 3D com blocos.
-- `validacao-camera/`: scripts e resultados do teste de detecção com a webcam.
-- `planta/`: Planta Mix em PDF e em imagem, nas versões clara e escura.
+- `planta/`: imagens da Planta Mix na versão escura, usadas na seção 1.
 
 ---
 

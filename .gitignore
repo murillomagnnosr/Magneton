@@ -13,3 +13,13 @@ frontend-3d/*.html
 entrega-1/ENTREGA-1-secoes-2-a-6.pdf
 
 __pycache__/
+
+# Trabalho de apoio, fica local e fora do repositório
+validacao-camera/
+planta/planta-2-pavimento.png
+planta/planta-terreo.png
+entrega-1/*.py
+entrega-1/telas/*.py
+entrega-1/telas/*.svg
+frontend-3d/*.py
+frontend-3d/*.pdf
