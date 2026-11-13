@@ -1,0 +1,95 @@
+{
+  "duracao_s": 180.4,
+  "frames_analisados": 883,
+  "zona_mais_movimentada": {
+    "zona": "Centro/Base",
+    "ocupacao_media": 2.726,
+    "participacao_pct": 54.7
+  },
+  "ranking": [
+    {
+      "zona": "Centro/Base",
+      "ocupacao_media": 2.726,
+      "participacao_pct": 54.7
+    },
+    {
+      "zona": "Esquerda/Base",
+      "ocupacao_media": 1.903,
+      "participacao_pct": 38.2
+    },
+    {
+      "zona": "Esquerda/Meio",
+      "ocupacao_media": 0.326,
+      "participacao_pct": 6.5
+    },
+    {
+      "zona": "Direita/Base",
+      "ocupacao_media": 0.02,
+      "participacao_pct": 0.4
+    },
+    {
+      "zona": "Centro/Meio",
+      "ocupacao_media": 0.005,
+      "participacao_pct": 0.1
+    },
+    {
+      "zona": "Esquerda/Topo",
+      "ocupacao_media": 0.0,
+      "participacao_pct": 0.0
+    },
+    {
+      "zona": "Centro/Topo",
+      "ocupacao_media": 0.0,
+      "participacao_pct": 0.0
+    },
+    {
+      "zona": "Direita/Topo",
+      "ocupacao_media": 0.0,
+      "participacao_pct": 0.0
+    },
+    {
+      "zona": "Direita/Meio",
+      "ocupacao_media": 0.0,
+      "participacao_pct": 0.0
+    }
+  ],
+  "por_janela": [
+    {
+      "inicio_s": 0,
+      "total_medio": 5.24,
+      "zona_mais_cheia": "Esquerda/Base",
+      "ocupacao_da_zona": 2.84
+    },
+    {
+      "inicio_s": 30,
+      "total_medio": 5.04,
+      "zona_mais_cheia": "Centro/Base",
+      "ocupacao_da_zona": 2.85
+    },
+    {
+      "inicio_s": 60,
+      "total_medio": 4.82,
+      "zona_mais_cheia": "Centro/Base",
+      "ocupacao_da_zona": 3.03
+    },
+    {
+      "inicio_s": 90,
+      "total_medio": 5.65,
+      "zona_mais_cheia": "Esquerda/Base",
+      "ocupacao_da_zona": 3.04
+    },
+    {
+      "inicio_s": 120,
+      "total_medio": 4.87,
+      "zona_mais_cheia": "Centro/Base",
+      "ocupacao_da_zona": 2.42
+    },
+    {
+      "inicio_s": 150,
+      "total_medio": 4.32,
+      "zona_mais_cheia": "Centro/Base",
+      "ocupacao_da_zona": 3.02
+    }
+  ],
+  "imagens_de_camera_gravadas": 0
+}

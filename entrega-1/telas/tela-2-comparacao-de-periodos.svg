@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" font-family="system-ui, 'Segoe UI', Arial, Helvetica, sans-serif">
+<defs>
+<pattern id="hach" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+<rect width="8" height="8" fill="#FFFFFF"/><line x1="0" y1="0" x2="0" y2="8" stroke="#7B8794" stroke-width="2.4"/></pattern>
+<marker id="seta" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 z" fill="#5B6770"/></marker>
+</defs>
+<rect width="1280" height="800" fill="#F4F6F8"/>
+<rect width="1280" height="56" fill="#FFFFFF"/>
+<line x1="0" y1="56" x2="1280" y2="56" stroke="#C9D1D9" stroke-width="1" />
+<rect x="24" y="16" width="24" height="24" rx="5" fill="#BD0026"/>
+<rect x="29" y="21" width="8" height="8" fill="#FECC5C"/><rect x="37" y="29" width="6" height="6" fill="#FFFFB2"/>
+<text x="58" y="34" font-size="16" font-weight="700" fill="#1F2933" text-anchor="start" >Mapa de Calor do Shopping</text>
+<text x="347.0" y="33" font-size="13" font-weight="400" fill="#5B6770" text-anchor="middle" >Mapa de calor</text>
+<rect x="414" y="12" width="186" height="32" rx="16" fill="#E4EDF6" stroke="#1F4E79" stroke-width="1" />
+<text x="507.0" y="33" font-size="13" font-weight="700" fill="#1F4E79" text-anchor="middle" >Comparação de períodos</text>
+<text x="673.0" y="33" font-size="13" font-weight="400" fill="#5B6770" text-anchor="middle" >Detalhe da zona</text>
+<text x="835.0" y="33" font-size="13" font-weight="400" fill="#5B6770" text-anchor="middle" >Câmeras e privacidade</text>
+<rect x="968" y="14" width="288" height="28" rx="14" fill="#F0F4F8" stroke="#C9D1D9" stroke-width="1" />
+<circle cx="984" cy="28" r="5" fill="#1F2933"/>
+<text x="996" y="32.5" font-size="12" font-weight="600" fill="#1F2933" text-anchor="start" >Fonte: 5 zonas por câmera · 11 simuladas</text>
+<rect x="24" y="66" width="1232" height="62" rx="6" fill="#FFFFFF" stroke="#C9D1D9" stroke-width="1" />
+<rect x="40" y="78" width="26" height="26" rx="13" fill="#1F2933" stroke="#1F2933" stroke-width="1" /><text x="53" y="96" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle" >A</text>
+<text x="76" y="84" font-size="11" font-weight="600" fill="#5B6770" text-anchor="start" >Período A (base)</text>
+<rect x="76" y="90" width="160" height="30" rx="5" fill="#FFFFFF" stroke="#9AA5B1" stroke-width="1" /><text x="86" y="109.5" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Qui, 05/11/2026</text><path d="M216,102.0 l5,6 l5,-6" fill="none" stroke="#5B6770" stroke-width="1.6"/><rect x="244" y="90" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#9AA5B1" stroke-width="1" /><text x="254" y="109.5" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Almoço</text><path d="M344,102.0 l5,6 l5,-6" fill="none" stroke="#5B6770" stroke-width="1.6"/>
+<text x="404" y="110" font-size="12" font-weight="400" fill="#5B6770" text-anchor="start" >comparado com</text>
+<rect x="512" y="78" width="26" height="26" rx="13" fill="#1F2933" stroke="#1F2933" stroke-width="1" /><text x="525" y="96" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle" >B</text>
+<text x="548" y="84" font-size="11" font-weight="600" fill="#5B6770" text-anchor="start" >Período B</text>
+<rect x="548" y="90" width="160" height="30" rx="5" fill="#FFFFFF" stroke="#9AA5B1" stroke-width="1" /><text x="558" y="109.5" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Sáb, 07/11/2026</text><path d="M688,102.0 l5,6 l5,-6" fill="none" stroke="#5B6770" stroke-width="1.6"/><rect x="716" y="90" width="120" height="30" rx="5" fill="#FFFFFF" stroke="#9AA5B1" stroke-width="1" /><text x="726" y="109.5" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Almoço</text><path d="M816,102.0 l5,6 l5,-6" fill="none" stroke="#5B6770" stroke-width="1.6"/>
+<text x="1240" y="100" font-size="12" font-weight="400" fill="#5B6770" text-anchor="end" >Variação = (B − A) ÷ A, sobre a densidade média</text>
+<text x="1240" y="117" font-size="12" font-weight="400" fill="#5B6770" text-anchor="end" >Só destaca 20% ou mais com diferença absoluta relevante</text>
+<rect x="24" y="138" width="848" height="636" rx="6" fill="#FFFFFF" stroke="#C9D1D9" stroke-width="1" />
+<text x="40" y="162" font-size="14" font-weight="700" fill="#1F2933" text-anchor="start" >Piso L1 · variação de A para B</text>
+<text x="856" y="162" font-size="12" font-weight="400" fill="#5B6770" text-anchor="end" >Qui 05/11, almoço  →  Sáb 07/11, almoço</text>
+<g transform="translate(48,178) scale(1.0)">
+<rect x="0" y="0" width="260" height="100" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="260" y="0" width="270" height="100" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="530" y="0" width="270" height="100" fill="#FFFFFF" stroke="#52606D" stroke-width="1.2"/>
+<rect x="0" y="100" width="110" height="50" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="110" y="100" width="580" height="50" fill="url(#hach)" stroke="#52606D" stroke-width="1.2"/>
+<rect x="690" y="100" width="110" height="50" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="0" y="150" width="180" height="180" fill="#92C5DE" stroke="#52606D" stroke-width="1.2"/>
+<rect x="180" y="150" width="60" height="180" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="240" y="150" width="200" height="180" fill="#B2182B" stroke="#52606D" stroke-width="1.2"/>
+<rect x="440" y="150" width="120" height="180" fill="#F4A582" stroke="#52606D" stroke-width="1.2"/>
+<rect x="560" y="150" width="60" height="180" fill="#2166AC" stroke="#52606D" stroke-width="1.2"/>
+<rect x="620" y="150" width="180" height="180" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="0" y="330" width="800" height="50" fill="#F4A582" stroke="#52606D" stroke-width="1.2"/>
+<rect x="0" y="380" width="300" height="100" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="300" y="380" width="200" height="100" fill="#F4A582" stroke="#52606D" stroke-width="1.2"/>
+<rect x="500" y="380" width="300" height="100" fill="#EEF0F2" stroke="#52606D" stroke-width="1.2"/>
+<rect x="533" y="3" width="264" height="94" fill="none" stroke="#1F2933" stroke-width="2.5" stroke-dasharray="7 4"/>
+<rect x="0" y="0" width="800" height="480" fill="none" stroke="#1F2933" stroke-width="2.5"/>
+<text x="130.0" y="47.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Âncora</text>
+<text x="130.0" y="63.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text>
+<text x="395.0" y="47.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Lojas Norte</text>
+<text x="395.0" y="63.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text>
+<text x="665.0" y="47.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Lojas Ala Norte</text>
+<text x="665.0" y="63.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >saiu do limiar em B</text>
+<text x="55.0" y="122.0" font-size="11" font-weight="700" fill="#1F2933" text-anchor="middle" >Entrada Oeste</text>
+<text x="55.0" y="138.0" font-size="10.5" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text>
+<rect x="341.6" y="105.0" width="116.8" height="40" rx="3" fill="#FFFFFF" opacity="0.92"/>
+<text x="400.0" y="122.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Corredor Norte</text>
+<text x="400.0" y="138.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >sem comparação</text>
+<text x="745.0" y="122.0" font-size="11" font-weight="700" fill="#1F2933" text-anchor="middle" >Entrada Leste</text>
+<text x="745.0" y="138.0" font-size="10.5" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text>
+<text x="90.0" y="237.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Lojas Oeste</text>
+<text x="90.0" y="253.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >−25%</text>
+<g transform="rotate(-90 210.0 240.0)"><text x="210.0" y="237.0" font-size="12" font-weight="700" fill="#1F2933" text-anchor="middle" >Corredor Oeste</text><text x="210.0" y="253.0" font-size="11.5" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text></g>
+<text x="340.0" y="237.0" font-size="12.5" font-weight="700" fill="#FFFFFF" text-anchor="middle" >Praça de alimentação</text>
+<text x="340.0" y="253.0" font-size="12.0" font-weight="400" fill="#FFFFFF" text-anchor="middle" >+62%</text>
+<text x="500.0" y="237.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Convivência</text>
+<text x="500.0" y="253.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >+35%</text>
+<g transform="rotate(-90 590.0 240.0)"><text x="590.0" y="237.0" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" >Corredor Leste</text><text x="590.0" y="253.0" font-size="11.5" font-weight="400" fill="#FFFFFF" text-anchor="middle" >−52%</text></g>
+<text x="710.0" y="237.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Lojas Leste</text>
+<text x="710.0" y="253.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text>
+<text x="400.0" y="352.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Corredor Principal</text>
+<text x="400.0" y="368.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >+23%</text>
+<text x="150.0" y="427.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Lojas Sul A</text>
+<text x="150.0" y="443.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text>
+<text x="400.0" y="427.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Entrada Principal</text>
+<text x="400.0" y="443.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >+29%</text>
+<text x="650.0" y="427.0" font-size="12.5" font-weight="700" fill="#1F2933" text-anchor="middle" >Lojas Sul B</text>
+<text x="650.0" y="443.0" font-size="12.0" font-weight="400" fill="#1F2933" text-anchor="middle" >estável</text>
+<path d="M-7,-6 L5,0 L-7,6 z" fill="#1F2933" transform="translate(-16,125) rotate(0)"/>
+<path d="M-7,-6 L5,0 L-7,6 z" fill="#1F2933" transform="translate(816,125) rotate(180)"/>
+<path d="M-7,-6 L5,0 L-7,6 z" fill="#1F2933" transform="translate(400,496) rotate(-90)"/>
+</g>
+<text x="40" y="692" font-size="12" font-weight="700" fill="#1F2933" text-anchor="start" >Variação da densidade</text>
+<rect x="40" y="702" width="104" height="16" rx="0" fill="#2166AC" stroke="#52606D" stroke-width="1" />
+<text x="92" y="733" font-size="11.5" font-weight="700" fill="#1F2933" text-anchor="middle" >queda forte</text>
+<text x="92" y="748" font-size="11" font-weight="400" fill="#5B6770" text-anchor="middle" >−50% ou menos</text>
+<rect x="144" y="702" width="104" height="16" rx="0" fill="#92C5DE" stroke="#52606D" stroke-width="1" />
+<text x="196" y="733" font-size="11.5" font-weight="700" fill="#1F2933" text-anchor="middle" >queda</text>
+<text x="196" y="748" font-size="11" font-weight="400" fill="#5B6770" text-anchor="middle" >−50% a −20%</text>
+<rect x="248" y="702" width="104" height="16" rx="0" fill="#EEF0F2" stroke="#52606D" stroke-width="1" />
+<text x="300" y="733" font-size="11.5" font-weight="700" fill="#1F2933" text-anchor="middle" >estável</text>
+<text x="300" y="748" font-size="11" font-weight="400" fill="#5B6770" text-anchor="middle" >−20% a +20%</text>
+<rect x="352" y="702" width="104" height="16" rx="0" fill="#F4A582" stroke="#52606D" stroke-width="1" />
+<text x="404" y="733" font-size="11.5" font-weight="700" fill="#1F2933" text-anchor="middle" >aumento</text>
+<text x="404" y="748" font-size="11" font-weight="400" fill="#5B6770" text-anchor="middle" >+20% a +50%</text>
+<rect x="456" y="702" width="104" height="16" rx="0" fill="#B2182B" stroke="#52606D" stroke-width="1" />
+<text x="508" y="733" font-size="11.5" font-weight="700" fill="#1F2933" text-anchor="middle" >aumento forte</text>
+<text x="508" y="748" font-size="11" font-weight="400" fill="#5B6770" text-anchor="middle" >+50% ou mais</text>
+<rect x="596" y="702" width="26" height="16" rx="0" fill="#FFFFFF" stroke="#1F2933" stroke-width="2" stroke-dasharray="5 3"/>
+<text x="630" y="715" font-size="11.5" font-weight="400" fill="#1F2933" text-anchor="start" >saiu ou caiu abaixo do limiar</text>
+<rect x="596" y="728" width="26" height="16" rx="0" fill="url(#hach)" stroke="#52606D" stroke-width="1" />
+<text x="630" y="741" font-size="11.5" font-weight="400" fill="#1F2933" text-anchor="start" >sem comparação</text>
+<rect x="888" y="138" width="368" height="636" rx="6" fill="#FFFFFF" stroke="#C9D1D9" stroke-width="1" />
+<text x="904" y="162" font-size="14" font-weight="700" fill="#1F2933" text-anchor="start" >Zonas com variação relevante</text>
+<text x="904" y="180" font-size="11.5" font-weight="400" fill="#5B6770" text-anchor="start" >Densidade média em pessoas por 100 m²</text>
+<text x="904" y="208" font-size="10.5" font-weight="700" fill="#5B6770" text-anchor="start" >ZONA</text><text x="1120" y="208" font-size="10.5" font-weight="700" fill="#5B6770" text-anchor="middle" >A  →  B</text><text x="1240" y="208" font-size="10.5" font-weight="700" fill="#5B6770" text-anchor="end" >VARIAÇÃO</text>
+<line x1="904" y1="216" x2="1240" y2="216" stroke="#C9D1D9" stroke-width="1" />
+<text x="904" y="242" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Praça de alimentação</text>
+<text x="1120" y="242" font-size="12.5" font-weight="400" fill="#5B6770" text-anchor="middle" >5,5  →  8,9</text>
+<rect x="1180" y="227" width="60" height="21" rx="10" fill="#B2182B" stroke="#52606D" stroke-width="1" />
+<text x="1210" y="242" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" >+62%</text>
+<line x1="904" y1="254" x2="1240" y2="254" stroke="#E4E7EB" stroke-width="1" />
+<text x="904" y="276" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Convivência</text>
+<text x="1120" y="276" font-size="12.5" font-weight="400" fill="#5B6770" text-anchor="middle" >4,3  →  5,8</text>
+<rect x="1180" y="261" width="60" height="21" rx="10" fill="#F4A582" stroke="#52606D" stroke-width="1" />
+<text x="1210" y="276" font-size="12" font-weight="700" fill="#1F2933" text-anchor="middle" >+35%</text>
+<line x1="904" y1="288" x2="1240" y2="288" stroke="#E4E7EB" stroke-width="1" />
+<text x="904" y="310" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Entrada Principal</text>
+<text x="1120" y="310" font-size="12.5" font-weight="400" fill="#5B6770" text-anchor="middle" >4,2  →  5,4</text>
+<rect x="1180" y="295" width="60" height="21" rx="10" fill="#F4A582" stroke="#52606D" stroke-width="1" />
+<text x="1210" y="310" font-size="12" font-weight="700" fill="#1F2933" text-anchor="middle" >+29%</text>
+<line x1="904" y1="322" x2="1240" y2="322" stroke="#E4E7EB" stroke-width="1" />
+<text x="904" y="344" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Corredor Principal</text>
+<text x="1120" y="344" font-size="12.5" font-weight="400" fill="#5B6770" text-anchor="middle" >5,3  →  6,5</text>
+<rect x="1180" y="329" width="60" height="21" rx="10" fill="#F4A582" stroke="#52606D" stroke-width="1" />
+<text x="1210" y="344" font-size="12" font-weight="700" fill="#1F2933" text-anchor="middle" >+23%</text>
+<line x1="904" y1="356" x2="1240" y2="356" stroke="#E4E7EB" stroke-width="1" />
+<text x="904" y="378" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Lojas Oeste</text>
+<text x="1120" y="378" font-size="12.5" font-weight="400" fill="#5B6770" text-anchor="middle" >3,2  →  2,4</text>
+<rect x="1180" y="363" width="60" height="21" rx="10" fill="#92C5DE" stroke="#52606D" stroke-width="1" />
+<text x="1210" y="378" font-size="12" font-weight="700" fill="#1F2933" text-anchor="middle" >−25%</text>
+<line x1="904" y1="390" x2="1240" y2="390" stroke="#E4E7EB" stroke-width="1" />
+<text x="904" y="412" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Corredor Leste</text>
+<text x="1120" y="412" font-size="12.5" font-weight="400" fill="#5B6770" text-anchor="middle" >2,5  →  1,2</text>
+<rect x="1180" y="397" width="60" height="21" rx="10" fill="#2166AC" stroke="#52606D" stroke-width="1" />
+<text x="1210" y="412" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle" >−52%</text>
+<line x1="904" y1="424" x2="1240" y2="424" stroke="#E4E7EB" stroke-width="1" />
+<text x="904" y="458" font-size="11" font-weight="700" fill="#5B6770" text-anchor="start" >MUDANÇA DE LIMIAR</text>
+<text x="904" y="482" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Lojas Ala Norte</text>
+<rect x="1086" y="467" width="154" height="21" rx="10" fill="#FFFFFF" stroke="#1F2933" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="1163" y="482" font-size="11.5" font-weight="700" fill="#1F2933" text-anchor="middle" >saiu do limiar em B</text>
+<text x="904" y="516" font-size="11" font-weight="700" fill="#5B6770" text-anchor="start" >SEM COMPARAÇÃO</text>
+<text x="904" y="540" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >Corredor Norte</text>
+<text x="1240" y="540" font-size="11.5" font-weight="400" fill="#5B6770" text-anchor="end" >câmera sem sinal em B</text>
+<rect x="904" y="570" width="336" height="104" rx="5" fill="#F7F9FB" stroke="#C9D1D9" stroke-width="1" />
+<text x="914" y="592" font-size="12" font-weight="700" fill="#1F2933" text-anchor="start" >Leitura automática</text>
+<text x="914" y="612" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >No almoço de sábado, a Praça de alimentação</text>
+<text x="914" y="629" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >teve densidade 62% maior que no almoço de</text>
+<text x="914" y="646" font-size="12.5" font-weight="400" fill="#1F2933" text-anchor="start" >quinta. Outras 8 zonas ficaram estáveis.</text>
+<text x="1256" y="790" font-size="11" font-weight="400" fill="#7B8794" text-anchor="end" >Wireframe — dados ilustrativos</text>
+</svg>

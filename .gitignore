@@ -1,0 +1,15 @@
+# Imagem real da câmera com pessoas identificáveis: não publicar
+validacao-camera/print_deteccao.png
+
+# Modelo de 35 MB: baixar de opencv_zoo (ver README)
+validacao-camera/modelo/
+
+# Cópia original da planta (usar as imagens em planta/)
+planta/planta-mix-capim-dourado-2026-11.pdf
+
+# Arquivos intermediários e versões superadas
+entrega-1/*.html
+frontend-3d/*.html
+entrega-1/ENTREGA-1-secoes-2-a-6.pdf
+
+__pycache__/
