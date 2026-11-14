@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V1\RelatorioController;
 use App\Http\Controllers\Api\V1\ResumoController;
 use App\Http\Controllers\Api\V1\ZonaController;
 use App\Http\Middleware\ChaveDeLeitura;
+use App\Http\Middleware\SemCache;
 use App\Http\Middleware\TokenDeIngestao;
 use App\Models\Contagem;
 use Illuminate\Support\Arr;
@@ -43,7 +44,7 @@ Route::prefix('ingestao/v1')->middleware(TokenDeIngestao::class)->name('ingestao
 |
 */
 
-Route::prefix('v1')->middleware(ChaveDeLeitura::class)->name('v1.')->group(function (): void {
+Route::prefix('v1')->middleware([ChaveDeLeitura::class, SemCache::class])->name('v1.')->group(function (): void {
     Route::get('zonas', [ZonaController::class, 'index'])->name('zonas.index');
     Route::get('zonas/{zona}/curva', [CurvaController::class, 'show'])->name('zonas.curva');
     Route::get('contagens', [ContagemController::class, 'index'])->name('contagens.index');

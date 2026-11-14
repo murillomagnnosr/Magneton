@@ -74,5 +74,8 @@ export default async function handler(requisicao, resposta) {
     doServidor.headers.get('content-type') ?? 'application/json'
   );
 
-  return resposta.status(doServidor.status).send(corpo);
+  // end() em vez de send(): o send() do runtime da Vercel gera um ETag, que dispara
+  // requisição condicional e resposta 304 — indesejado numa tela que relê a cada segundos.
+  resposta.statusCode = doServidor.status;
+  return resposta.end(corpo);
 }

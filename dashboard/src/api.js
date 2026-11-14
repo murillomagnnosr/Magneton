@@ -21,7 +21,9 @@ async function buscar(rota, parametros = {}) {
 
   let resposta;
   try {
-    resposta = await fetch(url, { headers: { Accept: 'application/json' } });
+    // cache: 'no-store' obriga o navegador a reler a cada chamada. Sem isto, o polling
+    // do ao vivo pode servir a resposta anterior do cache e a tela fica parada.
+    resposta = await fetch(url, { headers: { Accept: 'application/json' }, cache: 'no-store' });
   } catch {
     throw new ErroDaApi('A API não respondeu. Ela está no ar em http://localhost:8000?', 0);
   }
