@@ -26,6 +26,21 @@ A chave nunca aparece no navegador: quem a envia é a função que roda na Verce
 A ponte só deixa passar leitura (`/api/v1/...`). A ingestão continua fechada à internet:
 quem escreve contagem é o worker, pela rede local.
 
+## Já está no ar
+
+| | |
+| --- | --- |
+| Painel | https://hackarun-mapa-calor.vercel.app |
+| Túnel (domínio fixo) | https://crayfish-unwoven-semantic.ngrok-free.dev |
+| Projeto na Vercel | `murillomagnnosr-4858s-projects/hackarun-mapa-calor` |
+
+As variáveis `CAMERA_API_URL` e `CAMERA_API_KEY` já estão criadas em Production. Como o
+domínio do túnel é fixo, não é preciso mexer nelas de novo.
+
+O que resta por apresentação é só abrir o túnel e ligar as câmeras — veja
+"No dia da apresentação". As três seções abaixo ficam registradas para refazer o
+caminho do zero, se um dia for preciso.
+
 ## Passo 1 — ligar o ngrok à sua conta (uma vez só)
 
 Crie a conta em https://ngrok.com, copie o authtoken do painel deles e rode:
@@ -51,7 +66,8 @@ powershell -File C:\Users\muril\hackarun-mapa-calor\publicar.ps1 -Dominio seu-do
 ```
 
 O script sobe a API se ela não estiver no ar, avisa se a chave estiver vazia e abre o
-túnel. Na tela do ngrok, a linha `Forwarding` mostra o endereço `https://...` — é ele que
+túnel. Se o ngrok reclamar que o endereço já está online (`ERR_NGROK_334`), é porque há
+um túnel aberto: feche a janela dele antes, ou use a que já está no ar. Na tela do ngrok, a linha `Forwarding` mostra o endereço `https://...` — é ele que
 vai para a Vercel no passo seguinte.
 
 ## Passo 3 — publicar o painel na Vercel
@@ -91,6 +107,7 @@ Fechar a janela do ngrok ao terminar: o endereço público deixa de existir na h
 | Painel carrega vazio e a API responde 401 | `CAMERA_API_KEY` diferente de `MAPA_CHAVE_LEITURA` |
 | Vem uma página de aviso do ngrok no lugar do dado | a chamada não passou pela ponte da Vercel |
 | Painel local (5173) parou de ler | falta `VITE_API_KEY` em `dashboard/.env.local` |
+| `ERR_NGROK_334` ao abrir o túnel | já existe um túnel aberto no mesmo domínio |
 
 ## Privacidade
 
