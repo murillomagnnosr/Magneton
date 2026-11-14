@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import { Activity } from 'lucide-react';
+import Relatorio from './Relatorio';
 
 // A faixa escura do topo. Só identifica a tela e diz, em uma linha, o que ela é —
 // contagem agregada, sem imagem e sem identificação de ninguém.
@@ -22,13 +23,15 @@ export default function Header() {
         <Activity size={20} color="#7daaff" />
       </span>
 
-      <div style={{ minWidth: 0 }}>
+      <div style={{ minWidth: 0, flex: '1 1 auto' }}>
         <h1 className="cabecalho__titulo">Mapa de calor de fluxo de pessoas</h1>
         <p className="cabecalho__nota">
           Contagem agregada por zona e janela de {state.config?.duracao_min ?? 15} minutos.
           Sem imagem e sem identificação de pessoas.
         </p>
       </div>
+
+      <Relatorio />
     </header>
   );
 }

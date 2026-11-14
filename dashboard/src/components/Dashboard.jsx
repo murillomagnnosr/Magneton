@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import Header from './Header';
-import Panorama from './Panorama';
 import Frase from './Frase';
 import Indicadores from './Indicadores';
 import BarraDoDia from './BarraDoDia';
@@ -12,12 +11,16 @@ import PeriodoSelector from './PeriodoSelector';
 import JanelaSelector from './JanelaSelector';
 import BotaoAoVivo from './BotaoAoVivo';
 
-// De cima para baixo, cada faixa responde uma pergunta:
-//   0. a abertura escura diz o que se repete toda semana, antes de qualquer filtro;
+// A ordem da página é a ordem em que um gerente olha:
 //   1. a barra de filtros escolhe o recorte, e fica grudada no topo ao rolar;
-//   2. o hero diz a conclusão do recorte, com os quatro números ao lado;
-//   3. a barra do dia mostra a forma do dia e deixa escolher o instante;
-//   4. mapa e ranking provam: onde, e quanto. O mapa tem os dois pavimentos em abas.
+//   2. o mapa, logo abaixo dela — é para isso que se abre o painel. A frase vem
+//      colada nele, porque é a leitura do que o mapa está mostrando;
+//   3. à direita, os quatro números e o ranking, que respondem "quanto";
+//   4. a barra do dia, para trocar de instante;
+//   5. o detalhe da zona, quando alguma está selecionada.
+//
+// O padrão da semana saiu daqui para dentro do botão "Relatório": ele ocupava a tela
+// inicial inteira e empurrava o mapa para baixo da dobra.
 //
 // As mesmas peças valem no modo ao vivo. O que muda é o papel delas: a barra do dia
 // deixa de ser o seletor e passa a ser o histórico ao lado do agora, e clicar nela sai
@@ -31,8 +34,6 @@ export default function Dashboard() {
       <Header />
 
       <main className="conteudo">
-        <Panorama />
-
         <div className="barra-filtros">
           <BotaoAoVivo />
 
@@ -48,17 +49,19 @@ export default function Dashboard() {
           )}
         </div>
 
-        <div className="hero">
-          <Frase />
-          <Indicadores />
+        <div className="colunas">
+          <div className="coluna-mapa">
+            <Frase />
+            <MallMap />
+          </div>
+
+          <div className="coluna-lado">
+            <Indicadores />
+            <Ranking />
+          </div>
         </div>
 
         <BarraDoDia />
-
-        <div className="colunas">
-          <MallMap />
-          <Ranking />
-        </div>
 
         {state.zonaSelecionada && <AreaDetails />}
       </main>
