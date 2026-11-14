@@ -1165,7 +1165,11 @@ button {
   inset: 0;
   z-index: 100;
   display: grid;
-  place-items: start center;
+  /* a coluna precisa poder encolher: com `auto` ela cresce até o max-content da
+     tabela do relatório e o conteúdo sai da tela no celular */
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-items: start;
   padding: var(--e5) var(--e4);
   overflow-y: auto;
   background: rgba(8, 13, 24, 0.62);
@@ -1181,8 +1185,12 @@ button {
 .modal {
   position: relative;
   width: 100%;
+  min-width: 0;
   max-width: 1180px;
   display: grid;
+  /* mesma armadilha do grid: sem o minmax(0,...) a coluna cresce até o max-content
+     dos cartões e o conteúdo sai da tela no celular */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--e3);
   animation: subir 180ms cubic-bezier(0.2, 0.8, 0.3, 1);
 }
@@ -1197,6 +1205,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: var(--e3);
+  min-width: 0;
   color: #dbe6fb;
 }
 
@@ -1337,5 +1346,144 @@ button {
 @media (max-width: 720px) {
   .lacuna {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ------------------------------------------------- relatório por período */
+
+.relatorio__abas {
+  display: flex;
+  min-width: 0;
+  gap: var(--e1);
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--raio);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.relatorio__aba {
+  padding: 0.35rem 0.8rem;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #b9c9e4;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--transicao), color var(--transicao);
+}
+
+.relatorio__aba:hover {
+  color: #ffffff;
+}
+
+.relatorio__aba[aria-selected='true'] {
+  background: #ffffff;
+  color: var(--tinta);
+}
+
+.relatorio__datas {
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+  flex-wrap: wrap;
+  padding: var(--e3) var(--e4);
+  background: var(--superficie-2);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+}
+
+.data-campo {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--tinta);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.data-campo:focus-visible {
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px var(--acento-claro);
+  outline: none;
+}
+
+.selo-variacao {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.18rem 0.5rem;
+  border-radius: var(--raio-pilula);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.selo-variacao--sobe {
+  background: #fee2e6;
+  color: #be123c;
+}
+
+.selo-variacao--desce {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.selo-variacao--igual {
+  background: var(--superficie-3);
+  color: var(--tinta-3);
+}
+
+.tabela-zonas {
+  width: 100%;
+  min-width: 0;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.tabela-zonas th {
+  padding: 0 var(--e2) var(--e2);
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tinta-4);
+  border-bottom: 1px solid var(--linha);
+}
+
+.tabela-zonas th:not(:first-child),
+.tabela-zonas td:not(:first-child) {
+  text-align: right;
+}
+
+.tabela-zonas td {
+  padding: var(--e2);
+  border-bottom: 1px solid var(--superficie-3);
+  color: var(--tinta);
+}
+
+.tabela-zonas tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabela-zonas__nome {
+  display: grid;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.tabela-zonas__vazio {
+  color: var(--tinta-4);
+  font-size: 0.76rem;
+}
+
+@media (max-width: 720px) {
+  .tabela-zonas__oculta-no-celular {
+    display: none;
   }
 }

@@ -43,6 +43,7 @@ export const api = {
   aoVivo: () => buscar('ao-vivo'),
   pico: (dia, periodo) => buscar('pico', { dia, periodo }),
   panorama: () => buscar('panorama'),
+  relatorio: (de, ate) => buscar('relatorio', { de, ate }),
   doPeriodo: (dia, periodo) => buscar('contagens', { dia, periodo }),
   daJanela: (dia, janela) => buscar('contagens', { dia, janela }),
   curva: (zonaId, dia) => buscar(`zonas/${zonaId}/curva`, { dia }),
@@ -87,6 +88,23 @@ export function rotuloDaJanela(janela, duracaoMin = 15) {
   const fim = hora * 60 + minuto + duracaoMin;
 
   return `${janela}–${String(Math.floor(fim / 60)).padStart(2, '0')}:${String(fim % 60).padStart(2, '0')}`;
+}
+
+/** "2026-11-14" vira "14/11"; com ano, "14/11/2026". */
+export function data(valor, comAno = false) {
+  if (!valor) return '—';
+  return new Date(`${valor}T12:00`).toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    ...(comAno ? { year: 'numeric' } : {}),
+  });
+}
+
+/** 0.345 vira "+34,5%"; -0.08 vira "−8,0%". */
+export function variacao(valor) {
+  if (valor === null || valor === undefined) return null;
+  const sinal = valor > 0 ? '+' : valor < 0 ? '−' : '';
+  return `${sinal}${numero(Math.abs(valor) * 100, 1)}%`;
 }
 
 /** "13:00" vira "13h"; "13:30" vira "13h30". */
