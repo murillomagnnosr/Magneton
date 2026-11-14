@@ -17,14 +17,17 @@ Uso:  python ferramentas/zonas_da_pintura.py
 Saida: o literal PHP para o GerarZonas e uma imagem de conferencia no scratchpad.
 """
 import sys
+import tempfile
+from pathlib import Path
 
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-PASTA = r"C:\Users\muril\AppData\Local\Temp\claude\d3c1bdfea2d8e46c\5d341726-cac6-4db7-a7dc-6858bc52f706\scratchpad"
-PINTADO = r"C:\Users\muril\AppData\Local\Temp\claude\d3c1bdfea2d8e46c\5d341726-cac6-4db7-a7dc-6858bc52f706\images\4.png"
-PLANTA = r"C:\Users\muril\hackarun-mapa-calor\dashboard\public\planta-piso1.jpg"
+RAIZ = Path(__file__).resolve().parent.parent
+PINTADO = str(RAIZ / "planta" / "planta-pintada.png")
+PLANTA = str(RAIZ / "dashboard" / "public" / "planta-piso1.jpg")
+CONFERENCIA = str(Path(tempfile.gettempdir()) / "conferencia-zonas.png")
 
 # A imagem pintada e um print do painel. Estes tres numeros vieram de alinhar as linhas
 # pretas dela com as da planta (96% dos pixels de linha caem sobre linha da planta).
@@ -172,7 +175,8 @@ def conferir(lista):
         cy = sum(p[1] for p in pontos) / len(pontos)
         desenho.text((cx - 20, cy - 16), zid, fill=(0, 0, 0), font=fonte,
                      stroke_width=4, stroke_fill=(255, 255, 255))
-    imagem.resize((LARGURA // 2, ALTURA // 2), Image.LANCZOS).save(rf"{PASTA}\conferencia-zonas.png")
+    imagem.resize((LARGURA // 2, ALTURA // 2), Image.LANCZOS).save(CONFERENCIA)
+    print(f"// conferência desenhada em {CONFERENCIA}")
 
 
 def main():
