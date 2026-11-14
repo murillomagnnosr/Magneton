@@ -2,6 +2,8 @@
 
 **Painel no ar:** https://hackarun-mapa-calor.vercel.app
 
+**Vídeo 90s:** https://youtube.com/shorts/bBIsDQgiO_Y
+
 Projeto do HackaRun (desafio 02 — fluxo e movimentação de pessoas), equipe Magneton.
 Um mapa de calor sobre a planta do shopping, que mostra **onde as pessoas se concentram,
 onde fica vazio e como isso muda ao longo do dia** — a partir de contagens agregadas por
