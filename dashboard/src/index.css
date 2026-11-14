@@ -1280,3 +1280,62 @@ button {
 .coluna-lado .indicadores {
   gap: var(--e3);
 }
+
+/* ------------------------------------------------- a lacuna que o projeto preenche */
+
+/* O cliente já conta entrada e saída. O que ele não sabe é quantas pessoas ficam e
+   onde. Esta é a frase que explica para que serve o resto da tela, e por isso abre
+   o relatório — na tela inicial ela empurraria o mapa para baixo da dobra. */
+.lacuna {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e3);
+  padding: var(--e4);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  box-shadow: var(--sombra);
+}
+
+.lacuna__lado {
+  display: grid;
+  gap: var(--e1);
+  align-content: start;
+  padding-left: var(--e3);
+  border-left: 3px solid var(--linha-forte);
+}
+
+.lacuna__lado--nosso {
+  border-left-color: var(--acento);
+}
+
+.lacuna__rotulo {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tinta-4);
+}
+
+.lacuna__lado--nosso .lacuna__rotulo {
+  color: var(--acento);
+}
+
+.lacuna__frase {
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--tinta);
+  letter-spacing: -0.012em;
+}
+
+.lacuna__nota {
+  font-size: 0.78rem;
+  color: var(--tinta-3);
+}
+
+@media (max-width: 720px) {
+  .lacuna {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

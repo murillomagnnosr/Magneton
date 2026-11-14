@@ -1,7 +1,7 @@
 # Documento de requisitos — Mapa de calor de fluxo de pessoas no shopping
 
 **HackaRun, desafio 02 — Inteligência sobre fluxo e movimentação de pessoas**
-Versão 3 (inclui a seção "Linguagem e método") · 12/11/2026
+Versão 4 (resposta à pergunta de descoberta 7: o shopping já conta entrada e saída) · 14/11/2026
 
 Marcações usadas: **[Fato]** vem do enunciado ou de decisão do grupo. **[Suposição]** foi adotada para seguir sem resposta. **[Estimativa]** é número sem fonte pesquisada. **[Validar com jurídico]** não é conclusão jurídica.
 
@@ -11,7 +11,9 @@ Cada requisito funcional responde a pelo menos uma das três perguntas do enunci
 
 ## 1. Resumo
 
-A administração do shopping decide hoje posição de quiosques, valor de pontos, escala de limpeza e segurança e campanhas sem saber, com dados, onde as pessoas se concentram, quais espaços ficam vazios e como isso muda ao longo do dia e da semana. A solução é um mapa de calor sobre a planta do shopping, alimentado apenas por contagens agregadas por zona e por janela de tempo, com uma camada de leitura que transforma o mapa em decisão: ranking de zonas quentes e frias, zona fria persistente, comparação entre períodos e frases prontas que dizem o que mudou. Os usuários são a gestão comercial, de operações e de marketing. O motivo de fazer assim é que as abordagens que acompanham indivíduos (câmera com identificação, Wi-Fi, BLE) trazem risco ligado à LGPD, e um sistema cujo contrato de entrada não tem campo para dado pessoal reduz esse risco desde o desenho (a conclusão jurídica precisa de validação). Na demo, os dados vêm de um simulador e são sempre rotulados como simulados. Em produção, o mesmo contrato de dados recebe contagens de contadores de entrada, sensores de presença por zona ou visão computacional na borda que descarta o frame.
+O shopping já sabe **quantas pessoas entram e saem**: os contadores de entrada existem e funcionam. O que ninguém sabe é **quantas ficam, onde ficam e por quanto tempo**. Um número de entrada diz o tamanho do público do dia; ele não diz se as pessoas foram até a ala leste ou se deram meia-volta depois da praça. É nessa lacuna que este projeto entra.
+
+Por causa dela, a administração decide hoje posição de quiosques, valor de pontos, escala de limpeza e segurança e campanhas sem saber, com dados, onde as pessoas se concentram, quais espaços ficam vazios e como isso muda ao longo do dia e da semana. A solução é um mapa de calor sobre a planta do shopping, alimentado apenas por contagens agregadas por zona e por janela de tempo, com uma camada de leitura que transforma o mapa em decisão: ranking de zonas quentes e frias, zona fria persistente, comparação entre períodos e frases prontas que dizem o que mudou. Os usuários são a gestão comercial, de operações e de marketing. O motivo de fazer assim é que as abordagens que acompanham indivíduos (câmera com identificação, Wi-Fi, BLE) trazem risco ligado à LGPD, e um sistema cujo contrato de entrada não tem campo para dado pessoal reduz esse risco desde o desenho (a conclusão jurídica precisa de validação). Na demo, os dados vêm de um simulador e são sempre rotulados como simulados. Em produção, o mesmo contrato de dados recebe contagens de contadores de entrada, sensores de presença por zona ou visão computacional na borda que descarta o frame.
 
 ---
 
@@ -47,7 +49,33 @@ A administração do shopping decide hoje posição de quiosques, valor de ponto
 | 4 | A organização fornece planta ou dados de contagem? | S4: planta fictícia e dados simulados. |
 | 5 | A demo é ao vivo ou em vídeo, e quanto tempo tem o pitch? | S7, com vídeo de reserva gravado. |
 | 6 | Quem da administração é o principal interessado: operações, comercial ou marketing? | Comercial e operações são as personas da demo; marketing aparece na comparação. |
-| 7 | O shopping já possui contadores ou sensores, e a banca espera tempo real ou histórico? | Não se sabe. A demo é análise histórica com reprodução acelerada do dia; tempo real fica no roadmap. |
+| 7 | O shopping já possui contadores ou sensores, e a banca espera tempo real ou histórico? | **Respondida (14/11/2026).** O shopping conta entrada e saída, e só isso: não sabe quantas pessoas permanecem nem onde. A demo entrega as duas leituras, histórico por janela e ao vivo. Ver 2.4. |
+
+### 2.4 O que o cliente já tem, e o que falta
+
+Descoberto em 14/11/2026, com o cliente.
+
+| | O shopping já tem | Este projeto acrescenta |
+|---|---|---|
+| **Quantas** | Entradas e saídas no total do dia | Quantas estão em cada zona, em cada janela de 15 minutos |
+| **Onde** | Nada por região | A zona, sobre a planta real |
+| **Quando** | O total do dia | A curva do dia e o padrão por dia da semana |
+| **Permanência** | Nada | Ocupação média por zona, que é permanência medida em pessoas, não em minutos |
+
+A diferença entre contar porta e contar zona é a diferença entre saber o tamanho do público e saber o
+que ele faz lá dentro. Duas quintas com o mesmo número na catraca podem ter mix de ocupação
+completamente diferente — e é o mix que muda onde colocar o quiosque e quando escalar a limpeza.
+
+**Oportunidade de integração (roadmap).** Como o cliente já tem o número da porta, as duas fontes se
+somam sem precisar de sensor novo: com entrada e ocupação por zona na mesma janela, sai a taxa de
+alcance de cada região — de cada 100 pessoas que entraram, quantas chegaram à Galeria Leste. Isso dá
+preço de ponto comercial com lastro. Não está no MVP: depende de acesso ao dado da catraca e de
+alinhar as janelas de tempo das duas fontes.
+
+**O que isso não é.** Permanência aqui é ocupação média, não tempo de estadia por pessoa. Medir quanto
+tempo *uma pessoa* fica exigiria segui-la, que é exatamente o que o RNF01 e o RNF02 proíbem. A
+ocupação média responde à mesma pergunta de negócio sem rastrear ninguém: uma zona com 40 pessoas
+em média ao longo de duas horas segurou gente, independentemente de serem as mesmas 40.
 
 ---
 

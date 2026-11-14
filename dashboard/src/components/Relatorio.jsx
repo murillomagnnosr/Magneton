@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
 import { FileBarChart, X } from 'lucide-react';
 import Panorama from './Panorama';
+import Lacuna from './Lacuna';
 
 // O relatório da semana, atrás de um botão.
 //
@@ -81,6 +82,7 @@ export default function Relatorio() {
               </button>
             </div>
 
+            <Lacuna />
             <Panorama />
           </div>
         </div>
