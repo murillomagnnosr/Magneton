@@ -27,32 +27,24 @@ export default function MallMap() {
   if (!planta) return <Aviso texto="A API não informou qual planta desenhar." erro />;
 
   return (
-    <section style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 12, padding: '1.25rem 1.5rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+    <section className="cartao">
+      <div className="cartao__cabeca">
         <div style={{ minWidth: 0 }}>
-          <h2 style={{ margin: '0 0 0.35rem 0', fontSize: '0.95rem', color: '#334155' }}>Onde as pessoas estão</h2>
-          <p style={{ margin: '0 0 0.9rem 0', fontSize: '0.78rem', color: '#64748b' }}>
+          <h2 className="cartao__titulo">Onde as pessoas estão</h2>
+          <p className="cartao__nota">
             {planta.descricao} As áreas coloridas são a circulação pública: corredores, praças
             e entradas. Clique para abrir a curva do dia.
           </p>
         </div>
 
-        <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: 8, padding: 3, gap: 2, flexShrink: 0 }}>
+        <div className="pilulas" role="group" aria-label="Como desenhar as zonas">
           {[['Mapa de calor', true], ['Por zona', false]].map(([rotulo, ligado]) => (
             <button
               key={rotulo}
+              type="button"
+              className="pilula"
+              aria-pressed={suavizado === ligado}
               onClick={() => setSuavizado(ligado)}
-              style={{
-                padding: '0.35rem 0.75rem',
-                border: 'none',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontSize: '0.78rem',
-                fontWeight: suavizado === ligado ? 600 : 500,
-                background: suavizado === ligado ? '#ffffff' : 'transparent',
-                color: suavizado === ligado ? '#0f172a' : '#64748b',
-                boxShadow: suavizado === ligado ? '0 1px 3px rgba(0,0,0,0.12)' : 'none',
-              }}
             >
               {rotulo}
             </button>
@@ -62,7 +54,7 @@ export default function MallMap() {
 
       <svg
         viewBox={vista(planta)}
-        style={{ width: '100%', height: 'auto', display: 'block', background: '#ffffff' }}
+        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 'var(--raio)' }}
         role="img"
         aria-label="Planta do shopping com as zonas de circulação coloridas pela densidade de pessoas"
       >
@@ -102,7 +94,7 @@ export default function MallMap() {
                 ? 'transparent'
                 : CLASSES[classe].cor}
               fillOpacity={classe === 'sem_dado' ? 0.45 : suavizado ? 0.75 : 0.82}
-              stroke={selecionada || emFoco ? '#0f172a' : outroPiso(zona) ? '#1d4ed8' : '#475569'}
+              stroke={selecionada || emFoco ? '#0b1220' : outroPiso(zona) ? '#1d4ed8' : '#475569'}
               strokeWidth={selecionada || emFoco ? 10 : outroPiso(zona) ? 6 : suavizado ? 2 : 3}
               // tracejado marca que a zona não está neste pavimento
               strokeDasharray={outroPiso(zona) ? '22 14' : undefined}
@@ -132,7 +124,7 @@ export default function MallMap() {
               textAnchor="middle"
               fontSize={destaque ? 40 : 32}
               fontWeight="700"
-              fill="#0f172a"
+              fill="#0b1220"
               stroke="#ffffff"
               strokeWidth="6"
               paintOrder="stroke"
@@ -216,36 +208,41 @@ function rotuloDaZona(state, publicado, vezes) {
 
 function Legenda({ limiar, aoVivo, suavizado }) {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem', marginTop: '0.9rem', fontSize: '0.75rem', color: '#475569' }}>
-      <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <span style={{ color: '#64748b' }}>mais vazia</span>
-        {['muito_baixa', 'baixa', 'media', 'alta', 'muito_alta'].map((classe) => (
-          <i key={classe} style={{ width: 22, height: 14, background: CLASSES[classe].cor, border: '1px solid #cbd5e1' }} />
-        ))}
-        <span style={{ color: '#64748b' }}>mais cheia</span>
+    <div className="legenda">
+      <span className="legenda__item">
+        mais vazia
+        <span className="legenda__escada">
+          {['muito_baixa', 'baixa', 'media', 'alta', 'muito_alta'].map((classe) => (
+            <i key={classe} className="legenda__degrau" style={{ background: CLASSES[classe].cor }} />
+          ))}
+        </span>
+        mais cheia
       </span>
 
-      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <svg width="16" height="16" style={{ borderRadius: 3, border: '1px solid #94a3b8' }}>
+      <span className="legenda__item">
+        <svg width="16" height="16" style={{ borderRadius: 3, border: '1px solid var(--linha-forte)' }}>
           <rect width="16" height="16" fill="#eef2f6" />
           <line x1="0" y1="16" x2="16" y2="0" stroke="#94a3b8" strokeWidth="2.5" />
         </svg>
         menos de {limiar ?? 5} pessoas: o número não é publicado
       </span>
 
-      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <i style={{ width: 16, height: 16, borderRadius: 3, background: CLASSES.sem_dado.cor, border: '1px solid #94a3b8' }} />
+      <span className="legenda__item">
+        <i style={{
+          width: 16, height: 16, borderRadius: 3,
+          background: CLASSES.sem_dado.cor, border: '1px solid var(--linha-forte)',
+        }} />
         {aoVivo ? 'sem câmera agora' : 'sem câmera medindo'}
       </span>
 
-      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+      <span className="legenda__item">
         <svg width="22" height="14">
           <rect x="1" y="1" width="20" height="12" fill="none" stroke="#1d4ed8" strokeWidth="2.5" strokeDasharray="5 3" />
         </svg>
         zona de outro pavimento, desenhada sobre a planta deste
       </span>
 
-      <span style={{ color: '#94a3b8' }}>
+      <span className="legenda__nota">
         {suavizado
           ? 'A suavização é visual; o dado é por zona. Os contornos vieram da planta marcada pelo grupo e são aproximados.'
           : 'Os contornos vieram da planta marcada pelo grupo e são aproximados.'}
@@ -256,19 +253,8 @@ function Legenda({ limiar, aoVivo, suavizado }) {
 
 function Aviso({ texto, erro = false }) {
   return (
-    <div style={{
-      minHeight: 360,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      padding: '2rem',
-      color: erro ? '#b91c1c' : '#64748b',
-      background: erro ? '#fef2f2' : '#f8fafc',
-      border: `1px solid ${erro ? '#fecaca' : '#e2e8f0'}`,
-      borderRadius: 12,
-    }}>
-      <p style={{ margin: 0, maxWidth: 460, lineHeight: 1.5 }}>{texto}</p>
+    <div className={erro ? 'vazio vazio--erro' : 'vazio'}>
+      <p style={{ margin: 0, maxWidth: 460, lineHeight: 1.55 }}>{texto}</p>
     </div>
   );
 }

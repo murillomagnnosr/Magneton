@@ -32,26 +32,17 @@ export default function JanelaSelector() {
   );
 
   return (
-    <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-      <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#64748b', fontSize: '0.8rem' }}>
-        <Clock size={15} /> Horário
+    <label className="campo">
+      <span className="campo__rotulo">
+        <Clock size={14} /> Horário
       </span>
 
       <select
+        className="selecao"
         value={state.janela ?? ''}
         onChange={(evento) =>
           dispatch({ type: 'ESCOLHER_JANELA', payload: evento.target.value || null })
         }
-        style={{
-          padding: '0.5rem 0.75rem',
-          borderRadius: 8,
-          border: '1px solid #cbd5e1',
-          background: '#ffffff',
-          color: '#0f172a',
-          fontSize: '0.85rem',
-          fontWeight: state.janela ? 600 : 500,
-          maxWidth: 260,
-        }}
       >
         <option value="">Média do período ({janelas.length} janelas)</option>
 

@@ -16,15 +16,11 @@ export default function BotaoAoVivo() {
 
   return (
     <button
+      type="button"
+      className={ligado ? 'botao botao--vivo' : 'botao'}
+      style={ligado ? undefined : { borderRadius: 'var(--raio-pilula)' }}
+      aria-pressed={ligado}
       onClick={() => dispatch({ type: 'ALTERNAR_AO_VIVO' })}
-      style={{
-        display: 'flex', alignItems: 'center', gap: 8,
-        padding: '0.45rem 0.9rem', borderRadius: 999, cursor: 'pointer',
-        fontWeight: 600, fontSize: '0.82rem',
-        border: `1px solid ${ligado ? '#ef4444' : '#cbd5e1'}`,
-        background: ligado ? '#ef4444' : '#ffffff',
-        color: ligado ? '#ffffff' : '#475569',
-      }}
     >
       <Radio size={15} className={ligado ? 'pulsando' : undefined} />
       {ligado

@@ -3,7 +3,7 @@ import { DashboardContext } from '../context/DashboardContext';
 import { CalendarDays } from 'lucide-react';
 import { hora } from '../api';
 
-// Dia e período em uma linha só.
+// Dia e período, os dois primeiros filtros da barra.
 //
 // O filtro de dia segue o mesmo formato do de horário: rótulo com ícone à esquerda e
 // lista à direita, e cada opção já diz quanto aquele dia moveu. Assim dá para escolher
@@ -45,26 +45,17 @@ export default function PeriodoSelector() {
   }, [state.panorama]);
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+    <>
       {dias.length > 0 ? (
-        <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#64748b', fontSize: '0.8rem' }}>
-            <CalendarDays size={15} /> Dia
+        <label className="campo">
+          <span className="campo__rotulo">
+            <CalendarDays size={14} /> Dia
           </span>
 
           <select
+            className="selecao"
             value={state.dia ?? ''}
             onChange={(evento) => dispatch({ type: 'ESCOLHER_DIA', payload: evento.target.value })}
-            style={{
-              padding: '0.5rem 0.75rem',
-              borderRadius: 8,
-              border: '1px solid #cbd5e1',
-              background: '#ffffff',
-              color: '#0f172a',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              maxWidth: 320,
-            }}
           >
             {dias.map((dia) => {
               const quando = new Date(`${dia}T12:00`);
@@ -81,33 +72,22 @@ export default function PeriodoSelector() {
           </select>
         </label>
       ) : (
-        <span style={{ color: '#64748b', fontSize: '0.85rem' }}>Nenhum dia com contagem ainda.</span>
+        <span style={{ fontSize: '0.84rem', color: 'var(--tinta-3)' }}>Nenhum dia com contagem ainda.</span>
       )}
 
-      <div style={{ display: 'flex', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 8, padding: 3, gap: 2 }}>
-        {periodos.map((periodo) => {
-          const ativo = state.periodo === periodo;
-
-          return (
-            <button
-              key={periodo}
-              onClick={() => dispatch({ type: 'ESCOLHER_PERIODO', payload: periodo })}
-              style={{
-                padding: '0.4rem 0.8rem',
-                border: 'none',
-                background: ativo ? '#0f172a' : 'transparent',
-                color: ativo ? '#ffffff' : '#64748b',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontWeight: ativo ? 600 : 500,
-                fontSize: '0.82rem',
-              }}
-            >
-              {ROTULOS[periodo] ?? periodo}
-            </button>
-          );
-        })}
+      <div className="pilulas" role="group" aria-label="Período do dia">
+        {periodos.map((periodo) => (
+          <button
+            key={periodo}
+            type="button"
+            className="pilula"
+            aria-pressed={state.periodo === periodo}
+            onClick={() => dispatch({ type: 'ESCOLHER_PERIODO', payload: periodo })}
+          >
+            {ROTULOS[periodo] ?? periodo}
+          </button>
+        ))}
       </div>
-    </div>
+    </>
   );
 }

@@ -32,25 +32,25 @@ export default function MapaDaPraca() {
   const recorte = planta.recorte;
 
   return (
-    <section style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 12, padding: '1.25rem 1.5rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+    <section className="cartao">
+      <div className="cartao__cabeca">
         <div style={{ minWidth: 0 }}>
-          <h2 style={{ margin: '0 0 0.35rem 0', fontSize: '0.95rem', color: '#334155', display: 'flex', alignItems: 'center', gap: 7 }}>
-            <Layers size={16} color="#1d4ed8" /> {zona.nome}, de perto
+          <h2 className="cartao__titulo">
+            <Layers size={15} color="var(--acento)" /> {zona.nome}, de perto
           </h2>
-          <p style={{ margin: '0 0 0.9rem 0', fontSize: '0.78rem', color: '#64748b' }}>
+          <p className="cartao__nota">
             {planta.descricao} No mapa do térreo esta área aparece tracejada, por ser de
             outro pavimento; aqui ela está na planta dela.
           </p>
         </div>
 
-        <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.1 }}>
+        <div className="grandeza">
+          <div className="grandeza__valor numero">
             {classe === 'abaixo_do_limiar'
-              ? `menos de ${publicado.limiar ?? 5}`
+              ? `< ${publicado.limiar ?? 5}`
               : pessoas === null ? '—' : numero(pessoas, state.aoVivo ? 0 : 1)}
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+          <div className="grandeza__unidade">
             {state.aoVivo ? 'pessoas agora' : 'pessoas na média do período'}
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function MapaDaPraca() {
         viewBox={recorte
           ? `${recorte.x} ${recorte.y} ${recorte.largura} ${recorte.altura}`
           : `0 0 ${planta.largura} ${planta.altura}`}
-        style={{ width: '100%', height: 'auto', display: 'block', background: '#ffffff' }}
+        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 'var(--raio)' }}
         role="img"
         aria-label={`Planta do 2º pavimento com a ${zona.nome} destacada`}
       >
@@ -78,7 +78,7 @@ export default function MapaDaPraca() {
           points={planta.poligono.map(([x, y]) => `${x},${y}`).join(' ')}
           fill={classe === 'abaixo_do_limiar' ? 'url(#hachura-praca)' : CLASSES[classe].cor}
           fillOpacity={classe === 'sem_dado' ? 0.35 : 0.45}
-          stroke={selecionada || emFoco ? '#0f172a' : '#1d4ed8'}
+          stroke={selecionada || emFoco ? '#0b1220' : '#1d4ed8'}
           strokeWidth={selecionada || emFoco ? 7 : 4}
           onClick={() => escolherZona(selecionada ? null : zona.id)}
           onMouseEnter={() => sobrevoarZona(zona.id)}
@@ -95,7 +95,7 @@ export default function MapaDaPraca() {
             textAnchor="middle"
             fontSize="46"
             fontWeight="700"
-            fill="#0f172a"
+            fill="#0b1220"
             stroke="#ffffff"
             strokeWidth="7"
             paintOrder="stroke"
@@ -106,7 +106,7 @@ export default function MapaDaPraca() {
         )}
       </svg>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '0.9rem', fontSize: '0.75rem', color: '#475569' }}>
+      <div className="legenda">
         <span>
           {comparacaoEmPalavras(vezes)
             ?? (classe === 'abaixo_do_limiar'
@@ -114,7 +114,7 @@ export default function MapaDaPraca() {
               : 'Sem contagem para este período.')}
         </span>
 
-        <span style={{ color: '#94a3b8' }}>
+        <span className="legenda__nota">
           As lojas em volta não são zonas: só a área de mesas e circulação é medida.
           Área e densidade vêm do registro da zona, medido na planta marcada pelo grupo.
         </span>
