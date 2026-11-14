@@ -1,0 +1,7 @@
+# torch e torchvision: instalar antes, na versão só-CPU (bem menor):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+ultralytics
+lap
+streamlit
+pandas
+imageio-ffmpeg

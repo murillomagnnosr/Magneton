@@ -1,0 +1,356 @@
+[
+    {
+        "id": "Z01",
+        "nome": "Âncora",
+        "tipo": "ancora",
+        "area_m2": 433,
+        "centroide": [
+            16.8,
+            6.5
+        ],
+        "vizinhos": [
+            "Z02",
+            "Z04",
+            "Z05"
+        ],
+        "planta": {
+            "x": 0,
+            "y": 0,
+            "largura": 260,
+            "altura": 100
+        }
+    },
+    {
+        "id": "Z02",
+        "nome": "Lojas Norte",
+        "tipo": "lojas",
+        "area_m2": 450,
+        "centroide": [
+            51,
+            6.5
+        ],
+        "vizinhos": [
+            "Z01",
+            "Z03",
+            "Z05"
+        ],
+        "planta": {
+            "x": 260,
+            "y": 0,
+            "largura": 270,
+            "altura": 100
+        }
+    },
+    {
+        "id": "Z03",
+        "nome": "Lojas Ala Norte",
+        "tipo": "lojas",
+        "area_m2": 450,
+        "centroide": [
+            85.9,
+            6.5
+        ],
+        "vizinhos": [
+            "Z02",
+            "Z05",
+            "Z06"
+        ],
+        "planta": {
+            "x": 530,
+            "y": 0,
+            "largura": 270,
+            "altura": 100
+        }
+    },
+    {
+        "id": "Z04",
+        "nome": "Entrada Oeste",
+        "tipo": "entrada",
+        "area_m2": 92,
+        "centroide": [
+            7.1,
+            16.1
+        ],
+        "vizinhos": [
+            "Z01",
+            "Z05",
+            "Z08"
+        ],
+        "planta": {
+            "x": 0,
+            "y": 100,
+            "largura": 110,
+            "altura": 50
+        }
+    },
+    {
+        "id": "Z05",
+        "nome": "Corredor Norte",
+        "tipo": "corredor",
+        "area_m2": 483,
+        "centroide": [
+            51.6,
+            16.1
+        ],
+        "vizinhos": [
+            "Z01",
+            "Z02",
+            "Z03",
+            "Z04",
+            "Z06",
+            "Z07",
+            "Z08",
+            "Z09",
+            "Z10",
+            "Z11",
+            "Z12"
+        ],
+        "planta": {
+            "x": 110,
+            "y": 100,
+            "largura": 580,
+            "altura": 50
+        }
+    },
+    {
+        "id": "Z06",
+        "nome": "Entrada Leste",
+        "tipo": "entrada",
+        "area_m2": 92,
+        "centroide": [
+            96.2,
+            16.1
+        ],
+        "vizinhos": [
+            "Z03",
+            "Z05",
+            "Z12"
+        ],
+        "planta": {
+            "x": 690,
+            "y": 100,
+            "largura": 110,
+            "altura": 50
+        }
+    },
+    {
+        "id": "Z07",
+        "nome": "Praça de alimentação",
+        "tipo": "alimentacao",
+        "area_m2": 600,
+        "centroide": [
+            43.9,
+            31
+        ],
+        "vizinhos": [
+            "Z05",
+            "Z09",
+            "Z10",
+            "Z13"
+        ],
+        "planta": {
+            "x": 240,
+            "y": 150,
+            "largura": 200,
+            "altura": 180
+        }
+    },
+    {
+        "id": "Z08",
+        "nome": "Lojas Oeste",
+        "tipo": "lojas",
+        "area_m2": 540,
+        "centroide": [
+            11.6,
+            31
+        ],
+        "vizinhos": [
+            "Z04",
+            "Z05",
+            "Z09",
+            "Z13"
+        ],
+        "planta": {
+            "x": 0,
+            "y": 150,
+            "largura": 180,
+            "altura": 180
+        }
+    },
+    {
+        "id": "Z09",
+        "nome": "Corredor Oeste",
+        "tipo": "corredor",
+        "area_m2": 180,
+        "centroide": [
+            27.1,
+            31
+        ],
+        "vizinhos": [
+            "Z05",
+            "Z07",
+            "Z08",
+            "Z13"
+        ],
+        "planta": {
+            "x": 180,
+            "y": 150,
+            "largura": 60,
+            "altura": 180
+        }
+    },
+    {
+        "id": "Z10",
+        "nome": "Convivência",
+        "tipo": "convivencia",
+        "area_m2": 360,
+        "centroide": [
+            64.5,
+            31
+        ],
+        "vizinhos": [
+            "Z05",
+            "Z07",
+            "Z11",
+            "Z13"
+        ],
+        "planta": {
+            "x": 440,
+            "y": 150,
+            "largura": 120,
+            "altura": 180
+        }
+    },
+    {
+        "id": "Z11",
+        "nome": "Corredor Leste",
+        "tipo": "corredor",
+        "area_m2": 180,
+        "centroide": [
+            76.2,
+            31
+        ],
+        "vizinhos": [
+            "Z05",
+            "Z10",
+            "Z12",
+            "Z13"
+        ],
+        "planta": {
+            "x": 560,
+            "y": 150,
+            "largura": 60,
+            "altura": 180
+        }
+    },
+    {
+        "id": "Z12",
+        "nome": "Lojas Leste",
+        "tipo": "lojas",
+        "area_m2": 540,
+        "centroide": [
+            91.7,
+            31
+        ],
+        "vizinhos": [
+            "Z05",
+            "Z06",
+            "Z11",
+            "Z13"
+        ],
+        "planta": {
+            "x": 620,
+            "y": 150,
+            "largura": 180,
+            "altura": 180
+        }
+    },
+    {
+        "id": "Z13",
+        "nome": "Corredor Principal",
+        "tipo": "corredor",
+        "area_m2": 667,
+        "centroide": [
+            51.6,
+            45.8
+        ],
+        "vizinhos": [
+            "Z07",
+            "Z08",
+            "Z09",
+            "Z10",
+            "Z11",
+            "Z12",
+            "Z14",
+            "Z15",
+            "Z16"
+        ],
+        "planta": {
+            "x": 0,
+            "y": 330,
+            "largura": 800,
+            "altura": 50
+        }
+    },
+    {
+        "id": "Z14",
+        "nome": "Lojas Sul A",
+        "tipo": "lojas",
+        "area_m2": 500,
+        "centroide": [
+            19.4,
+            55.5
+        ],
+        "vizinhos": [
+            "Z13",
+            "Z15"
+        ],
+        "planta": {
+            "x": 0,
+            "y": 380,
+            "largura": 300,
+            "altura": 100
+        }
+    },
+    {
+        "id": "Z15",
+        "nome": "Entrada Principal",
+        "tipo": "entrada",
+        "area_m2": 333,
+        "centroide": [
+            51.6,
+            55.5
+        ],
+        "vizinhos": [
+            "Z13",
+            "Z14",
+            "Z16"
+        ],
+        "planta": {
+            "x": 300,
+            "y": 380,
+            "largura": 200,
+            "altura": 100
+        }
+    },
+    {
+        "id": "Z16",
+        "nome": "Lojas Sul B",
+        "tipo": "lojas",
+        "area_m2": 500,
+        "centroide": [
+            83.9,
+            55.5
+        ],
+        "vizinhos": [
+            "Z13",
+            "Z15"
+        ],
+        "planta": {
+            "x": 500,
+            "y": 380,
+            "largura": 300,
+            "altura": 100
+        }
+    }
+]

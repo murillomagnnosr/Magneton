@@ -1,0 +1,34 @@
+# MediaMTX: recebe RTMP dos celulares (Larix) e entrega RTSP para o worker Python.
+# Uso: bin\mediamtx.exe mediamtx.yml
+#
+# Celular (Larix) publica em:  rtmp://192.168.137.1:1935/live/cam1   (live/cam2, ...)
+# Worker lê em:                rtsp://127.0.0.1:8554/live/cam1
+
+logLevel: info
+
+# Entrada dos celulares
+rtmp: true
+rtmpAddress: :1935
+
+# Saída para o worker (só TCP: evita perda de pacote e imagem quebrada)
+rtsp: true
+rtspAddress: :8554
+rtspTransports: [tcp]
+
+# Protocolos que o projeto não usa ficam desligados
+hls: false
+webrtc: false
+srt: false
+moq: false
+
+# API só na própria máquina; o dashboard usa para saber quais câmeras estão no ar
+api: true
+apiAddress: 127.0.0.1:9997
+
+# Privacidade: nada é gravado em disco
+pathDefaults:
+  record: false
+
+# Só caminhos live/camN são aceitos (live/cam1, live/cam2, ...)
+paths:
+  ~^live/cam\d+$:

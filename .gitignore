@@ -14,6 +14,12 @@ entrega-1/ENTREGA-1-secoes-2-a-6.pdf
 
 __pycache__/
 
+# Pipeline ao vivo: ambiente, binário do MediaMTX, pesos do modelo e banco local
+pipeline-ao-vivo/.venv/
+pipeline-ao-vivo/bin/
+pipeline-ao-vivo/dados/
+pipeline-ao-vivo/*.pt
+
 # Trabalho de apoio, fica local e fora do repositório
 validacao-camera/
 planta/planta-2-pavimento.png
