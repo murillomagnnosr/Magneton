@@ -39,7 +39,7 @@ class SemearDemo extends Command
     /**
      * Praça cheia, praça de alimentação, corredor movimentado e corredor frio.
      */
-    private const ATRATIVIDADE = ['Z07' => 2.2, 'Z01' => 1.6, 'Z02' => 1.4, 'Z05' => 0.15];
+    private const ATRATIVIDADE = ['Z07' => 2.2, 'Z01' => 1.6, 'Z02' => 1.4, 'Z17' => 0.6, 'Z05' => 0.15];
 
     public function handle(): int
     {
