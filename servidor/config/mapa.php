@@ -39,6 +39,10 @@ return [
     // Token do Bearer exigido na API de ingestão. Vazio deixa a ingestão aberta (modo demo).
     'token_ingestao' => env('MAPA_TOKEN_INGESTAO', ''),
 
+    // Chave exigida para ler a API quando ela está publicada por um túnel. Vazia deixa a
+    // leitura aberta, que é o caso da rede local.
+    'chave_leitura' => env('MAPA_CHAVE_LEITURA', ''),
+
     // Períodos consultáveis, em horas. Lista fechada: não há consulta por faixa livre.
     'periodos' => [
         'manha' => [10, 12],

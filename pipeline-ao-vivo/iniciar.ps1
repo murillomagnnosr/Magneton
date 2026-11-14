@@ -28,6 +28,12 @@ $argsWorker = @("worker.py"); if ($Mostrar) { $argsWorker += "--mostrar" }
 Start-Process -WorkingDirectory $aqui -FilePath $python -ArgumentList $argsWorker
 Start-Process -WorkingDirectory $aqui -FilePath $python -ArgumentList "-m", "streamlit", "run", "dashboard.py", "--server.headless", "true"
 if ($ComApi) {
+    # A API fica fechada por chave quando esta publicada; o enviador le /api/v1/config.
+    $envArquivo = Join-Path (Split-Path $aqui -Parent) "servidor\.env"
+    if (Test-Path $envArquivo) {
+        $linha = Select-String -Path $envArquivo -Pattern '^MAPA_CHAVE_LEITURA=(.+)$' | Select-Object -First 1
+        if ($linha) { $env:MAPA_CHAVE_LEITURA = $linha.Matches[0].Groups[1].Value.Trim() }
+    }
     Start-Process -WorkingDirectory $aqui -FilePath $python -ArgumentList "enviar_para_api.py"
 }
 

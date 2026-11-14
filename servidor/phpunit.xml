@@ -37,6 +37,7 @@
         <env name="MAPA_HORARIO_FECHA" value="22:00"/>
         <env name="MAPA_AO_VIVO_VALIDO_POR_S" value="15"/>
         <env name="MAPA_TOKEN_INGESTAO" value=""/>
+        <env name="MAPA_CHAVE_LEITURA" value=""/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>

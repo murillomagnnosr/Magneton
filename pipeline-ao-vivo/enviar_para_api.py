@@ -11,6 +11,7 @@ Uso: python enviar_para_api.py              (a cada 60 s)
 """
 import argparse
 import json
+import os
 import sqlite3
 import time
 import urllib.error
@@ -171,6 +172,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--api", default=destino.get("url", "http://localhost:8000"))
     ap.add_argument("--token", default=destino.get("token", ""))
+    # Exigida só quando o servidor está fechado por MAPA_CHAVE_LEITURA (modo publicado).
+    # Vem do ambiente, nunca do cameras.json: aquele arquivo vai para o repositório.
+    ap.add_argument("--chave", default=os.environ.get("MAPA_CHAVE_LEITURA", ""))
     ap.add_argument("--ao-vivo", type=float, default=3, help="segundos entre envios do estado atual")
     ap.add_argument("--janelas", type=float, default=60, help="segundos entre envios das janelas fechadas")
     ap.add_argument("--uma-vez", action="store_true")
@@ -181,7 +185,7 @@ def main():
 
     con = conectar()
     con.executescript(CONTROLE)
-    regras = _regras_da_api(a.api)
+    regras = _regras_da_api(a.api, a.chave)
     inicio, fim = regras["horario"]
     zona_por_camera = {c["id"]: c["zona_id"] for c in cfg["cameras"] if c.get("zona_id")}
 
@@ -220,7 +224,7 @@ def main():
         time.sleep(a.ao_vivo)
 
 
-def _regras_da_api(api):
+def _regras_da_api(api, chave=""):
     """Duração da janela e horário de funcionamento, perguntados à própria API.
 
     Assim existe um lugar só para esses parâmetros: mudar no .env do servidor muda aqui
@@ -228,7 +232,10 @@ def _regras_da_api(api):
     """
     from datetime import time as hora_do_dia
     try:
-        with urllib.request.urlopen(f"{api.rstrip('/')}{ROTA_CONFIG}", timeout=5) as r:
+        pedido = urllib.request.Request(f"{api.rstrip('/')}{ROTA_CONFIG}")
+        if chave:
+            pedido.add_header("x-api-key", chave)
+        with urllib.request.urlopen(pedido, timeout=5) as r:
             cfg = json.load(r)
         return {
             "duracao_min": int(cfg["duracao_min"]),

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\DiaController;
 use App\Http\Controllers\Api\V1\PicoController;
 use App\Http\Controllers\Api\V1\ResumoController;
 use App\Http\Controllers\Api\V1\ZonaController;
+use App\Http\Middleware\ChaveDeLeitura;
 use App\Http\Middleware\TokenDeIngestao;
 use App\Models\Contagem;
 use Illuminate\Support\Arr;
@@ -40,7 +41,7 @@ Route::prefix('ingestao/v1')->middleware(TokenDeIngestao::class)->name('ingestao
 |
 */
 
-Route::prefix('v1')->name('v1.')->group(function (): void {
+Route::prefix('v1')->middleware(ChaveDeLeitura::class)->name('v1.')->group(function (): void {
     Route::get('zonas', [ZonaController::class, 'index'])->name('zonas.index');
     Route::get('zonas/{zona}/curva', [CurvaController::class, 'show'])->name('zonas.curva');
     Route::get('contagens', [ContagemController::class, 'index'])->name('contagens.index');
@@ -50,7 +51,7 @@ Route::prefix('v1')->name('v1.')->group(function (): void {
     Route::get('resumo', [ResumoController::class, 'index'])->name('resumo.index');
 
     // Parâmetros que o painel e o worker precisam conhecer. O token de ingestão fica de fora.
-    Route::get('config', fn (): array => Arr::except(config('mapa'), ['token_ingestao']))
+    Route::get('config', fn (): array => Arr::except(config('mapa'), ['token_ingestao', 'chave_leitura']))
         ->name('config');
 
     Route::get('saude', fn (): array => [
