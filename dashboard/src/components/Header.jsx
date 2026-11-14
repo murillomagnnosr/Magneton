@@ -23,7 +23,7 @@ export default function Header() {
         <Activity size={20} color="#7daaff" />
       </span>
 
-      <div style={{ minWidth: 0, flex: '1 1 auto' }}>
+      <div className="cabecalho__texto">
         <h1 className="cabecalho__titulo">Mapa de calor de fluxo de pessoas</h1>
         <p className="cabecalho__nota">
           Contagem agregada por zona e janela de {state.config?.duracao_min ?? 15} minutos.

@@ -34,7 +34,7 @@ export default function MallMap() {
     state.config?.suavizacao_m ?? 8
   );
 
-  if (state.carregando) return <Aviso texto="Carregando a planta e as contagens…" />;
+  if (state.carregando) return <Esqueleto />;
   if (state.erro) return <Aviso texto={state.erro} erro />;
   if (state.zonas.length === 0) return <Aviso texto="A API não devolveu nenhuma zona." erro />;
   if (!planta) return <Aviso texto="A API não informou qual planta desenhar." erro />;
@@ -43,8 +43,8 @@ export default function MallMap() {
   const vezesDaPraca = vezesAMedia(publicadoDaPraca, state.densidadeDoPiso);
 
   return (
-    <section className="cartao">
-      <div className="cartao__cabeca">
+    <section className="cartao cartao--limpo">
+      <div className="mapa__topo">
         <div style={{ minWidth: 0 }}>
           <h2 className="cartao__titulo">Onde as pessoas estão</h2>
           <p className="cartao__nota">
@@ -107,10 +107,10 @@ export default function MallMap() {
 
       {!naPraca && (
         <>
+          <div className="mapa__tela">
 
       <svg
         viewBox={vista(planta)}
-        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 'var(--raio)' }}
         role="img"
         aria-label="Planta do shopping com as zonas de circulação coloridas pela densidade de pessoas"
       >
@@ -215,9 +215,34 @@ export default function MallMap() {
         })}
       </svg>
 
-      <Legenda limiar={state.resumo?.limiar} aoVivo={state.aoVivo} suavizado={suavizado} />
+          </div>
+
+          <Legenda limiar={state.resumo?.limiar} aoVivo={state.aoVivo} suavizado={suavizado} />
         </>
       )}
+    </section>
+  );
+}
+
+/** A forma do cartão enquanto a planta e as contagens não chegam. */
+function Esqueleto() {
+  return (
+    <section className="cartao cartao--limpo">
+      <div className="mapa__topo">
+        <div style={{ display: 'grid', gap: 'var(--e2)', width: '100%' }}>
+          <span className="esqueleto esqueleto--titulo" />
+          <span className="esqueleto esqueleto--linha" style={{ width: '82%' }} />
+        </div>
+      </div>
+
+      <div className="mapa__tela">
+        <span className="esqueleto" style={{ display: 'block', height: 420, borderRadius: 0 }} />
+      </div>
+
+      <div className="legenda">
+        <span className="esqueleto esqueleto--linha" style={{ width: 200 }} />
+        <span className="esqueleto esqueleto--linha" style={{ width: 260 }} />
+      </div>
     </section>
   );
 }

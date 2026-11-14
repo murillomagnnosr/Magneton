@@ -24,7 +24,7 @@ export default function BarraDoDia() {
   };
 
   const maior = Math.max(...dia.janelas.map((janela) => janela.pessoas_no_piso), 1);
-  const altura = 72;
+  const altura = 90;
   const largura = 1000;
   const passo = largura / dia.janelas.length;
   const noPeriodo = new Set(janelas);
@@ -45,10 +45,23 @@ export default function BarraDoDia() {
 
       <svg
         viewBox={`0 0 ${largura} ${altura}`}
-        style={{ width: '100%', height: 84, display: 'block', cursor: 'pointer' }}
+        preserveAspectRatio="none"
+        style={{ width: '100%', height: 104, display: 'block', cursor: 'pointer' }}
         role="img"
         aria-label="Total de pessoas no piso em cada janela do dia"
       >
+        <defs>
+          {/* A barra escurece para a base: a coluna ganha volume sem precisar de borda. */}
+          <linearGradient id="barra-no-periodo" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#1d4ed8" />
+          </linearGradient>
+          <linearGradient id="barra-fora" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#dfe4ec" />
+            <stop offset="100%" stopColor="#ccd3df" />
+          </linearGradient>
+        </defs>
+
         {dia.janelas.map((janela, i) => {
           const dentro = noPeriodo.has(janela.hora);
           const atual = state.janela === janela.hora;
@@ -62,8 +75,8 @@ export default function BarraDoDia() {
                 y={altura - h}
                 width={Math.max(1, passo - 2)}
                 height={h}
-                rx={2}
-                fill={atual ? '#0b1220' : dentro ? '#2563eb' : '#dbe3ed'}
+                rx={2.5}
+                fill={atual ? '#0d1117' : dentro ? 'url(#barra-no-periodo)' : 'url(#barra-fora)'}
               />
               <title>{`${janela.rotulo}: ${janela.pessoas_no_piso} pessoas no piso`}</title>
             </g>
