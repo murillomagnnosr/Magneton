@@ -18,7 +18,7 @@ A chave nunca aparece no navegador: quem a envia é a função que roda na Verce
 
 | Peça | Onde |
 | --- | --- |
-| Ponte que atravessa o túnel | `dashboard/api/[...caminho].js` |
+| Ponte que atravessa o túnel | `dashboard/api/ponte.js` |
 | Chave exigida para ler a API | `servidor/app/Http/Middleware/ChaveDeLeitura.php` |
 | Script que abre o túnel | `publicar.ps1` |
 | Chave já gerada e gravada | `servidor/.env`, `dashboard/.env.local` (ambos fora do git) |
@@ -67,8 +67,10 @@ powershell -File C:\Users\muril\hackarun-mapa-calor\publicar.ps1 -Dominio seu-do
 
 O script sobe a API se ela não estiver no ar, avisa se a chave estiver vazia e abre o
 túnel. Se o ngrok reclamar que o endereço já está online (`ERR_NGROK_334`), é porque há
-um túnel aberto: feche a janela dele antes, ou use a que já está no ar. Na tela do ngrok, a linha `Forwarding` mostra o endereço `https://...` — é ele que
-vai para a Vercel no passo seguinte.
+um túnel aberto: feche a janela dele antes, ou use a que já está no ar.
+
+Na tela do ngrok, a linha `Forwarding` mostra o endereço `https://...` — é ele que vai
+para a Vercel no passo seguinte.
 
 ## Passo 3 — publicar o painel na Vercel
 
