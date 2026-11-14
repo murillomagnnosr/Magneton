@@ -5,7 +5,7 @@ Leitura: coordenadas da imagem marcada (1152x648).
 Saida:  coordenadas do recorte da planta usado no projeto (origem 880,440 da piso1.jpg).
 
 As zonas aqui sao as sete que existem de fato na marcacao. As seis que foram apagadas
-(Renner, Sul, Cinemark, STZ, Big, Pernambucanas) nao voltam: os numeros pulam de
+(Noroeste, Renner, Sul, Cinemark, STZ, Big, Pernambucanas) nao voltam: os numeros pulam de
 proposito, para um id nunca mudar de significado.
 """
 from PIL import Image, ImageDraw, ImageFont
@@ -28,8 +28,6 @@ CORREDORES = [
       (474, 282), (486, 273), (498, 264), (510, 258), (522, 260), (534, 262), (545, 268),
       (557, 279), (569, 288), (581, 298), (592, 307), (604, 311), (618, 312), (632, 312),
       (645, 311), (652, 307)]),
-    ("Z03", "Mall Noroeste", "corredor", 8,
-     [(352, 300), (340, 310), (326, 322), (311, 333), (298, 344)]),
     ("Z05", "Mall Stilo", "corredor", 8,
      [(386, 352), (400, 352), (410, 361), (418, 376), (425, 392), (428, 401)]),
     ("Z06", "Mall Oeste", "corredor", 9,
@@ -51,8 +49,7 @@ AREAS = [
 
 VIZINHOS = {
     "Z01": [],
-    "Z02": ["Z03"],
-    "Z03": ["Z02"],
+    "Z02": [],
     "Z05": ["Z06"],
     "Z06": ["Z05", "Z07"],
     "Z07": ["Z06", "Z08"],

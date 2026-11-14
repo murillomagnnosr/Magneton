@@ -34,7 +34,7 @@ class TransmissaoTest extends TestCase
     private const CONSTANTE = 'Z08';
 
     /** A zona que nunca passa do limiar. */
-    private const VAZIA = 'Z03';
+    private const VAZIA = 'Z05';
 
     /**
      * Um almoço pequeno: a zona cheia enche às 12:30, a constante não muda, e a vazia
@@ -234,7 +234,7 @@ class TransmissaoTest extends TestCase
     {
         $this->semearAlmoco();
 
-        // Z03 tem 2 pessoas por janela: some do ranking, mas entra no total do piso
+        // A zona vazia tem 2 pessoas por janela: some do ranking, mas entra no total do piso
         $this->getJson(route('v1.dia.show', ['dia' => self::DIA]))
             ->assertOk()
             ->assertJsonPath('janelas.0.pessoas_no_piso', 40 + 30 + 2);
