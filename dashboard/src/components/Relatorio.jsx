@@ -18,11 +18,14 @@ import RelatorioDoPeriodo from './RelatorioDoPeriodo';
 // Escolher um dia dentro do padrão da semana fecha a janela, porque a escolha só tem
 // efeito no mapa, que está atrás dela.
 
+// O padrão da semana abre primeiro: é a leitura que não depende de escolher nada, e a
+// que responde à pergunta mais comum — o que se repete toda semana. As outras abas
+// pedem um recorte antes de dizer alguma coisa.
 const ABAS = [
+  { id: 'semana', rotulo: 'Padrão da semana' },
   { id: 'dia', rotulo: 'Dia' },
   { id: 'mes', rotulo: 'Mês' },
   { id: 'personalizado', rotulo: 'Personalizado' },
-  { id: 'semana', rotulo: 'Padrão da semana' },
 ];
 
 /** Soma ou subtrai dias de uma data "AAAA-MM-DD", sem passar por fuso. */
@@ -36,7 +39,7 @@ function somarDias(dia, quantos) {
 export default function Relatorio() {
   const { state } = useContext(DashboardContext);
   const [aberto, setAberto] = useState(false);
-  const [aba, setAba] = useState('dia');
+  const [aba, setAba] = useState(ABAS[0].id);
   const [personalizado, setPersonalizado] = useState(null);
   const botaoFechar = useRef(null);
   const diaAoAbrir = useRef(null);
