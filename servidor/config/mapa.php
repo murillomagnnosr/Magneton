@@ -93,4 +93,33 @@ return [
         'descricao' => 'Capim Dourado Shopping, 1º pavimento (térreo). '
             .'Planta Mix de Operações, novembro de 2026, folha 1/2.',
     ],
+
+    /*
+     * A praça de alimentação desenhada na folha dela.
+     *
+     * A praça fica no 2º pavimento, então na planta do térreo ela aparece por cima de
+     * outro piso, tracejada. A folha 2/2 é o pavimento dela inteiro e em escala maior, o
+     * que deixa ver onde as pessoas de fato sentam. É um segundo desenho da mesma zona,
+     * não uma zona nova: o número, a área e a densidade continuam vindo do registro da
+     * Z01, medido sobre a planta marcada pelo grupo.
+     *
+     * O polígono foi traçado sobre esta folha e fecha 1.326 m² na escala impressa dela,
+     * contra 1.445 m² medidos no térreo — duas medidas independentes a 8% uma da outra.
+     */
+    'planta_praca' => [
+        'zona_id' => 'Z01',
+        'imagem' => 'planta-piso2.jpg',
+        'largura' => 2250,
+        'altura' => 1460,
+        'recorte' => ['x' => 430, 'y' => 330, 'largura' => 1320, 'altura' => 830],
+        'descricao' => 'Capim Dourado Shopping, 2º pavimento — praça de alimentação. '
+            .'Planta Mix de Operações, novembro de 2026, folha 2/2.',
+        'poligono' => [
+            [740, 700], [750, 650], [772, 595], [805, 552], [850, 518], [905, 492],
+            [975, 472], [1075, 459], [1200, 452], [1325, 450], [1425, 458], [1500, 472],
+            [1506, 550], [1508, 700], [1508, 850], [1505, 975], [1450, 992], [1350, 1002],
+            [1250, 1004], [1150, 998], [1060, 982], [985, 958], [920, 925], [860, 880],
+            [810, 825], [772, 765], [750, 730],
+        ],
+    ],
 ];

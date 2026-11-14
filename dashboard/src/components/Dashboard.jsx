@@ -5,6 +5,7 @@ import Panorama from './Panorama';
 import Frase from './Frase';
 import BarraDoDia from './BarraDoDia';
 import MallMap from './MallMap';
+import MapaDaPraca from './MapaDaPraca';
 import Ranking from './Ranking';
 import AreaDetails from './AreaDetails';
 import PeriodoSelector from './PeriodoSelector';
@@ -15,7 +16,8 @@ import BotaoAoVivo from './BotaoAoVivo';
 //   0. o panorama diz o que se repete toda semana, antes de qualquer filtro;
 //   1. a frase diz a conclusão do dia escolhido;
 //   2. a barra mostra a forma do dia e deixa escolher o instante;
-//   3. mapa e ranking provam: onde, e quanto.
+//   3. mapa e ranking provam: onde, e quanto;
+//   4. a praça de alimentação de novo, na planta do pavimento dela.
 //
 // As mesmas peças valem no modo ao vivo. O que muda é o papel delas: a barra do dia
 // deixa de ser o seletor e passa a ser o histórico ao lado do agora, e clicar nela sai
@@ -58,6 +60,8 @@ export default function Dashboard() {
           <MallMap />
           <Ranking />
         </div>
+
+        <MapaDaPraca />
 
         {state.zonaSelecionada && <AreaDetails />}
       </main>
