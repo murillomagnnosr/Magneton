@@ -22,9 +22,11 @@ class ZonaResource extends JsonResource
             'id' => $this->id,
             'nome' => $this->nome,
             'tipo' => $this->tipo,
+            'piso' => $this->piso,
             'area_m2' => $this->area_m2,
             'centroide' => [$this->centroide_x, $this->centroide_y],
             'vizinhos' => $this->vizinhos,
+            // polígono da zona no sistema de coordenadas da planta (ver mapa.planta)
             'planta' => $this->planta,
         ];
     }

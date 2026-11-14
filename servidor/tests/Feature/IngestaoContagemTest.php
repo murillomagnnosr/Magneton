@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Zona;
 use Database\Seeders\ZonaSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
@@ -110,12 +111,14 @@ class IngestaoContagemTest extends TestCase
 
     public function test_recusa_contagem_acima_do_teto_por_area(): void
     {
-        // Z07 tem 600 m² e o teto é de 4 pessoas por m²
-        $this->enviar($this->registro(['contagem' => 2401]))
+        // o teto é de 4 pessoas por m² da zona, então sai da área da planta
+        $teto = Zona::findOrFail('Z07')->tetoDeContagem();
+
+        $this->enviar($this->registro(['contagem' => $teto + 1]))
             ->assertStatus(422)
             ->assertJsonValidationErrors('registros.0.contagem');
 
-        $this->enviar($this->registro(['contagem' => 2400]))->assertCreated();
+        $this->enviar($this->registro(['contagem' => $teto]))->assertCreated();
     }
 
     public function test_recusa_zona_inexistente(): void

@@ -12,15 +12,15 @@
   "cameras": [
     {
       "id": "cam1",
-      "nome": "Entrada Principal",
-      "zona_id": "Z15",
+      "nome": "Praça de Eventos Central",
+      "zona_id": "Z07",
       "url": "rtsp://127.0.0.1:8554/live/cam1",
       "linha": [[0.0, 0.6], [1.0, 0.6]]
     },
     {
       "id": "cam2",
-      "nome": "Praça de alimentação",
-      "zona_id": "Z07",
+      "nome": "Mall da C&A",
+      "zona_id": "Z02",
       "url": "rtsp://127.0.0.1:8554/live/cam2",
       "linha": null
     }

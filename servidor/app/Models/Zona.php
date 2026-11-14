@@ -24,7 +24,7 @@ class Zona extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id', 'nome', 'tipo', 'area_m2', 'centroide_x', 'centroide_y', 'vizinhos', 'planta',
+        'id', 'nome', 'tipo', 'piso', 'area_m2', 'centroide_x', 'centroide_y', 'vizinhos', 'planta',
     ];
 
     /** @return HasMany<Contagem, $this> */
@@ -53,6 +53,7 @@ class Zona extends Model
     protected function casts(): array
     {
         return [
+            'piso' => 'integer',
             'area_m2' => 'integer',
             'centroide_x' => 'float',
             'centroide_y' => 'float',

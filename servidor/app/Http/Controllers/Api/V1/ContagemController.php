@@ -55,13 +55,16 @@ class ContagemController extends Controller
             ->where('inicio_janela', $inicio)
             ->pluck('contagem', 'zona_id');
 
+        $publicadas = $zonas->map(
+            fn ($zona) => $this->publicacao->janela($zona, $achadas[$zona->id] ?? null)
+        )->values();
+
         return [
             'dia' => $dia,
             'janela' => $this->consulta->rotuloDaJanela(now()->parse($inicio)),
             'limiar' => $this->publicacao->limiar(),
-            'zonas' => $zonas->map(
-                fn ($zona) => $this->publicacao->janela($zona, $achadas[$zona->id] ?? null)
-            )->values(),
+            'densidade_do_piso' => $this->publicacao->densidadeDoPiso($publicadas->all(), $zonas),
+            'zonas' => $publicadas,
         ];
     }
 }

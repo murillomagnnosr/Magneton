@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Contagem;
+use App\Models\Zona;
 use Database\Seeders\ZonaSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -26,15 +27,25 @@ class TransmissaoTest extends TestCase
         $this->seed(ZonaSeeder::class);
     }
 
+    /** A zona que enche no pico do almoço. */
+    private const CHEIA = 'Z02';
+
+    /** A zona de movimento constante, usada para comparar. */
+    private const CONSTANTE = 'Z11';
+
+    /** A zona que nunca passa do limiar. */
+    private const VAZIA = 'Z03';
+
     /**
-     * Um almoço pequeno: Z07 enche às 12:30, Z13 fica constante e Z03 nunca passa de k.
+     * Um almoço pequeno: a zona cheia enche às 12:30, a constante não muda, e a vazia
+     * nunca passa de k.
      */
     private function semearAlmoco(): void
     {
         foreach (['12:00', '12:15', '12:30', '12:45'] as $hora) {
             $pico = $hora === '12:30';
 
-            foreach ([['Z07', $pico ? 90 : 40], ['Z13', 30], ['Z03', 2]] as [$zona, $contagem]) {
+            foreach ([[self::CHEIA, $pico ? 90 : 40], [self::CONSTANTE, 30], [self::VAZIA, 2]] as [$zona, $contagem]) {
                 Contagem::query()->create([
                     'zona_id' => $zona,
                     'inicio_janela' => self::DIA." {$hora}:00",
@@ -56,7 +67,7 @@ class TransmissaoTest extends TestCase
             route('v1.contagens.index', ['dia' => self::DIA, 'periodo' => 'almoco']),
             route('v1.contagens.index', ['dia' => self::DIA, 'janela' => '12:30']),
             route('v1.resumo.index', ['dia' => self::DIA, 'periodo' => 'almoco']),
-            route('v1.zonas.curva', ['zona' => 'Z03', 'dia' => self::DIA]),
+            route('v1.zonas.curva', ['zona' => self::VAZIA, 'dia' => self::DIA]),
         ];
 
         foreach ($rotas as $rota) {
@@ -72,7 +83,7 @@ class TransmissaoTest extends TestCase
 
         $zona = collect($this->getJson(route('v1.contagens.index', ['dia' => self::DIA, 'periodo' => 'almoco']))
             ->json('zonas'))
-            ->firstWhere('zona_id', 'Z03');
+            ->firstWhere('zona_id', self::VAZIA);
 
         $this->assertSame('abaixo_do_limiar', $zona['classe']);
         $this->assertArrayNotHasKey('pessoas', $zona);
@@ -84,7 +95,7 @@ class TransmissaoTest extends TestCase
     {
         $this->semearAlmoco();
 
-        $curva = $this->getJson(route('v1.zonas.curva', ['zona' => 'Z03', 'dia' => self::DIA]))->assertOk();
+        $curva = $this->getJson(route('v1.zonas.curva', ['zona' => self::VAZIA, 'dia' => self::DIA]))->assertOk();
 
         $curva->assertJsonPath('janelas_suprimidas', 4)->assertJsonPath('pico', null);
 
@@ -99,7 +110,7 @@ class TransmissaoTest extends TestCase
         $this->semearAlmoco();
 
         Contagem::query()->create([
-            'zona_id' => 'Z13',
+            'zona_id' => self::CONSTANTE,
             'inicio_janela' => self::DIA.' 13:00:00',
             'duracao_min' => 15,
             'contagem' => 1,
@@ -108,7 +119,7 @@ class TransmissaoTest extends TestCase
 
         $zona = collect($this->getJson(route('v1.contagens.index', ['dia' => self::DIA, 'periodo' => 'almoco']))
             ->json('zonas'))
-            ->firstWhere('zona_id', 'Z13');
+            ->firstWhere('zona_id', self::CONSTANTE);
 
         $this->assertSame('abaixo_do_limiar', $zona['classe']);
         $this->assertArrayNotHasKey('pessoas_media', $zona);
@@ -136,7 +147,7 @@ class TransmissaoTest extends TestCase
             ->assertOk()
             ->assertJsonPath('pico.janela', '12:30–12:45')
             ->assertJsonPath('pico.pessoas_no_piso', 122)
-            ->assertJsonPath('pico.regiao_lider.nome', 'Praça de alimentação')
+            ->assertJsonPath('pico.regiao_lider.zona_id', self::CHEIA)
             ->assertJsonPath('pico.regiao_lider.pessoas', 90);
     }
 
@@ -158,15 +169,15 @@ class TransmissaoTest extends TestCase
 
         $resumo = $this->getJson(route('v1.resumo.index', ['dia' => self::DIA, 'periodo' => 'almoco']))->assertOk();
 
-        $resumo->assertJsonPath('regiao_mais_movimentada.nome', 'Praça de alimentação')
-            ->assertJsonPath('regiao_menos_movimentada.nome', 'Corredor Principal')
+        $resumo->assertJsonPath('regiao_mais_movimentada.zona_id', self::CHEIA)
+            ->assertJsonPath('regiao_menos_movimentada.zona_id', self::CONSTANTE)
             ->assertJsonPath('pico.janela', '12:30–12:45')
             ->assertJsonPath('fonte', 'sensor')
             ->assertJsonPath('janelas_analisadas', 4);
 
         $comNumero = collect($resumo->json('ranking'))->filter(fn (array $z): bool => isset($z['densidade_100m2']));
 
-        $this->assertSame(['Praça de alimentação', 'Corredor Principal'], $comNumero->pluck('nome')->all());
+        $this->assertSame([self::CHEIA, self::CONSTANTE], $comNumero->pluck('zona_id')->all());
         $this->assertSame([0, 1], $comNumero->keys()->all(), 'Zonas com número devem vir antes das suprimidas.');
     }
 
@@ -174,12 +185,11 @@ class TransmissaoTest extends TestCase
     {
         $this->semearAlmoco();
 
-        $this->getJson(route('v1.zonas.curva', ['zona' => 'Z07', 'dia' => self::DIA]))
+        $this->getJson(route('v1.zonas.curva', ['zona' => self::CHEIA, 'dia' => self::DIA]))
             ->assertOk()
             ->assertJsonPath('pico.hora', '12:30')
             ->assertJsonPath('pico.pessoas', 90)
-            // 90 pessoas em 600 m². O JSON não guarda a fração zero, então 15.0 chega como 15.
-            ->assertJsonPath('pico.densidade_100m2', 15)
+            ->assertJsonPath('pico.densidade_100m2', $this->densidade(self::CHEIA, 90))
             ->assertJsonPath('janelas_suprimidas', 0);
     }
 
@@ -190,11 +200,73 @@ class TransmissaoTest extends TestCase
         $zonas = collect($this->getJson(route('v1.contagens.index', ['dia' => self::DIA, 'janela' => '12:00']))
             ->json('zonas'));
 
-        // 40 pessoas em 600 m² é mais denso que 30 em 667 m²
-        $this->assertSame(6.67, $zonas->firstWhere('zona_id', 'Z07')['densidade_100m2']);
-        $this->assertSame(4.5, $zonas->firstWhere('zona_id', 'Z13')['densidade_100m2']);
-        $this->assertSame('alta', $zonas->firstWhere('zona_id', 'Z07')['classe']);
-        $this->assertSame('media', $zonas->firstWhere('zona_id', 'Z13')['classe']);
+        // a mesma contagem em zonas de áreas diferentes dá densidades diferentes
+        $this->assertSame($this->densidade(self::CHEIA, 40), $zonas->firstWhere('zona_id', self::CHEIA)['densidade_100m2']);
+        $this->assertSame($this->densidade(self::CONSTANTE, 30), $zonas->firstWhere('zona_id', self::CONSTANTE)['densidade_100m2']);
+        $this->assertGreaterThan(
+            $zonas->firstWhere('zona_id', self::CONSTANTE)['densidade_100m2'],
+            $zonas->firstWhere('zona_id', self::CHEIA)['densidade_100m2'],
+            'A zona cheia precisa ficar mais densa que a constante.'
+        );
+    }
+
+    // ------------------------------------------------ a forma do dia e a régua do piso
+
+    public function test_dia_devolve_o_total_do_piso_em_cada_janela(): void
+    {
+        $this->semearAlmoco();
+
+        $resposta = $this->getJson(route('v1.dia.show', ['dia' => self::DIA]))->assertOk();
+
+        $resposta->assertJsonPath('duracao_min', 15)
+            ->assertJsonPath('total_no_dia', 4 * (40 + 30 + 2) + 50) // 12:30 tem 90 em vez de 40
+            ->assertJsonPath('pico.janela', '12:30–12:45')
+            ->assertJsonCount(4, 'janelas');
+
+        $primeira = $resposta->json('janelas.0');
+        $this->assertSame('12:00', $primeira['hora']);
+        $this->assertSame('12:00–12:15', $primeira['rotulo']);
+        $this->assertSame(72, $primeira['pessoas_no_piso']);
+        $this->assertSame(3, $primeira['zonas_medidas']);
+    }
+
+    public function test_dia_soma_o_piso_mesmo_com_zona_suprimida(): void
+    {
+        $this->semearAlmoco();
+
+        // Z03 tem 2 pessoas por janela: some do ranking, mas entra no total do piso
+        $this->getJson(route('v1.dia.show', ['dia' => self::DIA]))
+            ->assertOk()
+            ->assertJsonPath('janelas.0.pessoas_no_piso', 40 + 30 + 2);
+    }
+
+    public function test_dia_sem_contagem_devolve_404(): void
+    {
+        $this->semearAlmoco();
+
+        $this->getJson(route('v1.dia.show', ['dia' => '2020-01-01']))->assertStatus(404);
+    }
+
+    public function test_resumo_traz_a_densidade_media_do_piso(): void
+    {
+        $this->semearAlmoco();
+
+        // só as zonas publicadas entram; a vazia fica de fora por estar abaixo do limiar.
+        // A cheia no período: (40 + 40 + 90 + 40) / 4 = 52,5
+        $media = $this->densidadeDoPiso([self::CHEIA => 52.5, self::CONSTANTE => 30]);
+
+        $this->getJson(route('v1.resumo.index', ['dia' => self::DIA, 'periodo' => 'almoco']))
+            ->assertOk()
+            ->assertJsonPath('densidade_do_piso', $media);
+    }
+
+    public function test_janela_traz_a_densidade_media_do_piso(): void
+    {
+        $this->semearAlmoco();
+
+        $this->getJson(route('v1.contagens.index', ['dia' => self::DIA, 'janela' => '12:00']))
+            ->assertOk()
+            ->assertJsonPath('densidade_do_piso', $this->densidadeDoPiso([self::CHEIA => 40, self::CONSTANTE => 30]));
     }
 
     // ------------------------------------------------ erros, metadados e segredos
@@ -225,11 +297,13 @@ class TransmissaoTest extends TestCase
         $this->getJson(route('v1.zonas.curva', ['zona' => 'Z99']))->assertStatus(404);
     }
 
-    public function test_lista_as_dezesseis_regioes_da_planta(): void
+    public function test_lista_todas_as_regioes_da_planta(): void
     {
         $zonas = $this->getJson(route('v1.zonas.index'))->assertOk()->json('data');
 
-        $this->assertCount(16, $zonas);
+        // o número de zonas vem da planta; o que importa é que a API devolva todas elas
+        $this->assertCount(Zona::query()->count(), $zonas);
+        $this->assertNotEmpty($zonas);
         $this->assertSame('Z01', $zonas[0]['id']);
 
         foreach ($zonas as $zona) {
@@ -258,6 +332,25 @@ class TransmissaoTest extends TestCase
             ->assertJsonPath('registros', 12)
             ->assertJsonPath('fonte', 'sensor')
             ->assertJsonPath('limiar_k', self::K);
+    }
+
+    /** Densidade de uma zona, em pessoas por 100 m², tirada da área real da planta. */
+    private function densidade(string $zonaId, float $pessoas): float
+    {
+        return Zona::findOrFail($zonaId)->densidade($pessoas);
+    }
+
+    /**
+     * Densidade média do piso sobre as zonas publicadas.
+     *
+     * @param  array<string, float>  $pessoasPorZona
+     */
+    private function densidadeDoPiso(array $pessoasPorZona): float
+    {
+        $pessoas = array_sum($pessoasPorZona);
+        $area = Zona::query()->findMany(array_keys($pessoasPorZona))->sum('area_m2');
+
+        return round(100 * $pessoas / $area, 2);
     }
 
     /**

@@ -5,67 +5,110 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 /**
- * Gera `database/dados/zonas.json` a partir da planta fictícia da Entrega 1.
+ * Gera `database/dados/zonas.json` a partir da planta real do Capim Dourado Shopping.
  *
- * A planta tem 800 x 480 unidades de desenho. A escala foi fixada para que a praça de
- * alimentação fique com os 600 m² do exemplo do contrato (REQUISITOS.md, seção 6):
- * 1 m² = 60 unidades², ou seja, 1 m = 7,746 unidades.
+ * Os corredores não foram inventados: vieram de uma planta marcada à mão pelo grupo,
+ * traçando onde a circulação realmente passa. `ferramentas/converter_zonas.py` leva
+ * aquelas marcações para o sistema de coordenadas usado aqui, que é o do recorte
+ * `dashboard/public/planta-piso1.jpg` (2740 x 1820 pixels).
  *
- * Rodar só quando a planta mudar. Depois, `php artisan db:seed --class=ZonaSeeder`.
+ * Só entram áreas de circulação pública (RNF04). Loja nenhuma é zona.
+ *
+ * A praça de alimentação fica no pavimento de cima, sobre a mesma área: por isso tem
+ * `piso` 2 e não faz fronteira de chão com as outras.
  */
 class GerarZonas extends Command
 {
     protected $signature = 'mapa:gerar-zonas';
 
-    protected $description = 'Gera o arquivo de zonas a partir da planta do piso';
-
-    private const UNIDADES_POR_M2 = 60.0;
+    protected $description = 'Gera o arquivo de zonas a partir da planta real do piso';
 
     /**
-     * id, nome, tipo, x, y, largura, altura — em unidades da planta.
-     *
-     * @var list<array{string, string, string, int, int, int, int}>
+     * Áreas impressas na planta, em m². Valem mais que qualquer medição minha sobre o
+     * desenho, e é por elas que a escala das outras zonas é calibrada.
      */
-    private const PLANTA = [
-        ['Z01', 'Âncora', 'ancora', 0, 0, 260, 100],
-        ['Z02', 'Lojas Norte', 'lojas', 260, 0, 270, 100],
-        ['Z03', 'Lojas Ala Norte', 'lojas', 530, 0, 270, 100],
-        ['Z04', 'Entrada Oeste', 'entrada', 0, 100, 110, 50],
-        ['Z05', 'Corredor Norte', 'corredor', 110, 100, 580, 50],
-        ['Z06', 'Entrada Leste', 'entrada', 690, 100, 110, 50],
-        ['Z07', 'Praça de alimentação', 'alimentacao', 240, 150, 200, 180],
-        ['Z08', 'Lojas Oeste', 'lojas', 0, 150, 180, 180],
-        ['Z09', 'Corredor Oeste', 'corredor', 180, 150, 60, 180],
-        ['Z10', 'Convivência', 'convivencia', 440, 150, 120, 180],
-        ['Z11', 'Corredor Leste', 'corredor', 560, 150, 60, 180],
-        ['Z12', 'Lojas Leste', 'lojas', 620, 150, 180, 180],
-        ['Z13', 'Corredor Principal', 'corredor', 0, 330, 800, 50],
-        ['Z14', 'Lojas Sul A', 'lojas', 0, 380, 300, 100],
-        ['Z15', 'Entrada Principal', 'entrada', 300, 380, 200, 100],
-        ['Z16', 'Lojas Sul B', 'lojas', 500, 380, 300, 100],
+    private const AREA_IMPRESSA = ['Z07' => 265.90];
+
+    /**
+     * id, nome, tipo, piso, vizinhos e polígono no sistema da planta.
+     *
+     * @var list<array{string, string, string, int, list<string>, list<array{int, int}>}>
+     */
+    private const ZONAS = [
+        ['Z01', 'Praça de Alimentação', 'alimentacao', 2, ['Z04'],
+            [[82, 1214], [216, 1151], [432, 1132], [591, 1151], [639, 1233], [630, 1377],
+                [577, 1512], [466, 1598], [312, 1618], [178, 1579], [82, 1483], [43, 1348]]],
+
+        ['Z02', 'Mall da C&A', 'corredor', 1, ['Z03', 'Z11'],
+            [[458, 985], [589, 1005], [713, 995], [833, 975], [956, 939], [1059, 882],
+                [1141, 827], [1245, 798], [1370, 784], [1448, 798], [1466, 698], [1370, 682],
+                [1225, 698], [1099, 735], [1007, 796], [918, 845], [811, 875], [701, 895],
+                [593, 903], [474, 885]]],
+
+        ['Z03', 'Mall Noroeste', 'corredor', 1, ['Z02', 'Z04'],
+            [[437, 900], [379, 949], [313, 1006], [241, 1059], [178, 1113], [236, 1181],
+                [297, 1129], [369, 1076], [437, 1017], [495, 970]]],
+
+        ['Z04', 'Mall da Renner', 'corredor', 1, ['Z01', 'Z03', 'Z05'],
+            [[211, 1192], [362, 1177], [498, 1182], [617, 1218], [643, 1132], [512, 1092],
+                [358, 1087], [203, 1102]]],
+
+        ['Z05', 'Mall Stilo', 'corredor', 1, ['Z04', 'Z06', 'Z09'],
+            [[630, 1230], [681, 1227], [709, 1255], [742, 1320], [775, 1394], [789, 1436],
+                [875, 1406], [859, 1360], [824, 1280], [781, 1201], [713, 1143], [630, 1140]]],
+
+        ['Z06', 'Mall Oeste', 'corredor', 1, ['Z05', 'Z07'],
+            [[832, 1472], [921, 1472], [1018, 1460], [1107, 1421], [1170, 1375], [1108, 1293],
+                [1057, 1333], [992, 1362], [915, 1370], [832, 1370]]],
+
+        ['Z07', 'Praça de Eventos Central', 'convivencia', 1, ['Z06', 'Z08', 'Z09'],
+            [[1139, 1204], [1207, 1147], [1293, 1137], [1360, 1185], [1384, 1267],
+                [1356, 1353], [1279, 1401], [1192, 1397], [1139, 1339]]],
+
+        ['Z08', 'Mall Leste', 'corredor', 1, ['Z07', 'Z10'],
+            [[1355, 1330], [1452, 1359], [1558, 1388], [1664, 1421], [1770, 1450],
+                [1859, 1471], [1881, 1371], [1796, 1352], [1692, 1323], [1586, 1290],
+                [1480, 1261], [1385, 1232]]],
+
+        ['Z09', 'Mall Sul', 'corredor', 1, ['Z05', 'Z07', 'Z10'],
+            [[802, 1486], [878, 1539], [987, 1567], [1132, 1581], [1272, 1605], [1434, 1647],
+                [1460, 1549], [1294, 1505], [1146, 1481], [1003, 1467], [920, 1447], [862, 1404]]],
+
+        ['Z10', 'Mall do Cinemark', 'corredor', 1, ['Z08', 'Z09', 'Z11'],
+            [[1401, 772], [1401, 935], [1401, 1127], [1401, 1329], [1401, 1512], [1401, 1608],
+                [1513, 1608], [1513, 1512], [1513, 1329], [1513, 1127], [1513, 935], [1513, 772]]],
+
+        ['Z11', 'Galeria do STZ', 'corredor', 1, ['Z02', 'Z10'],
+            [[1476, 803], [1658, 803], [1899, 803], [2168, 803], [2418, 803], [2418, 701],
+                [2168, 701], [1899, 701], [1658, 701], [1476, 701]]],
+
+        ['Z12', 'Galeria do Big', 'corredor', 1, ['Z13'],
+            [[1881, 98], [1881, 223], [1881, 348], [1881, 454], [1983, 454], [1983, 348],
+                [1983, 223], [1983, 98]]],
+
+        ['Z13', 'Galeria da Pernambucanas', 'corredor', 1, ['Z12'],
+            [[1947, 505], [2101, 505], [2255, 505], [2418, 505], [2418, 403], [2255, 403],
+                [2101, 403], [1947, 403]]],
     ];
 
     public function handle(): int
     {
-        $metrosPorUnidade = sqrt(1 / self::UNIDADES_POR_M2);
+        $escala = $this->calibrarEscala();
         $zonas = [];
 
-        foreach (self::PLANTA as [$id, $nome, $tipo, $x, $y, $largura, $altura]) {
+        foreach (self::ZONAS as [$id, $nome, $tipo, $piso, $vizinhos, $pontos]) {
             $zonas[] = [
                 'id' => $id,
                 'nome' => $nome,
                 'tipo' => $tipo,
-                'area_m2' => (int) round($largura * $altura / self::UNIDADES_POR_M2),
-                'centroide' => [
-                    round(($x + $largura / 2) * $metrosPorUnidade, 1),
-                    round(($y + $altura / 2) * $metrosPorUnidade, 1),
-                ],
-                'vizinhos' => $this->vizinhosDe($id),
-                'planta' => ['x' => $x, 'y' => $y, 'largura' => $largura, 'altura' => $altura],
+                'piso' => $piso,
+                'area_m2' => (int) round(self::AREA_IMPRESSA[$id] ?? $this->areaDoPoligono($pontos) * $escala),
+                'area_da_planta' => isset(self::AREA_IMPRESSA[$id]),
+                'centroide' => $this->centroide($pontos, $escala),
+                'vizinhos' => $vizinhos,
+                'planta' => ['pontos' => $pontos],
             ];
         }
-
-        usort($zonas, fn (array $a, array $b): int => $a['id'] <=> $b['id']);
 
         if (($erro = $this->conferir($zonas)) !== null) {
             $this->error($erro);
@@ -73,60 +116,88 @@ class GerarZonas extends Command
             return self::FAILURE;
         }
 
-        $caminho = database_path('dados/zonas.json');
-        file_put_contents($caminho, json_encode($zonas, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)."\n");
-
-        $this->info(count($zonas).' zonas gravadas em '.$caminho);
-        $this->table(
-            ['id', 'nome', 'tipo', 'área (m²)', 'vizinhos'],
-            array_map(fn (array $z): array => [
-                $z['id'], $z['nome'], $z['tipo'], $z['area_m2'], implode(', ', $z['vizinhos']),
-            ], $zonas),
+        file_put_contents(
+            database_path('dados/zonas.json'),
+            json_encode(['planta' => config('mapa.planta'), 'zonas' => $zonas],
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)."\n"
         );
+
+        $this->relatar($zonas, $escala);
 
         return self::SUCCESS;
     }
 
     /**
-     * Vizinhas são as zonas que dividem um trecho de borda, não apenas um canto.
+     * Quantos m² vale cada pixel² do desenho.
      *
-     * @return list<string>
+     * A escala é da imagem, não dos meus polígonos: vem de config/mapa.php, onde foi
+     * calibrada pelas três praças de eventos que têm área impressa na planta e que
+     * concordaram entre si. Derivar a escala de um polígono traçado a olho daria o erro
+     * desse traçado, e não a medida da planta.
      */
-    private function vizinhosDe(string $id): array
+    private function calibrarEscala(): float
     {
-        $esta = collect(self::PLANTA)->firstWhere(0, $id);
-        $vizinhos = [];
+        $pixelsPorMetro = (float) config('mapa.planta.pixels_por_metro');
 
-        foreach (self::PLANTA as $outra) {
-            if ($outra[0] !== $id && $this->encostam($esta, $outra)) {
-                $vizinhos[] = $outra[0];
+        return 1 / ($pixelsPorMetro * $pixelsPorMetro);
+    }
+
+    /**
+     * Compara a área impressa na planta com a que meu polígono mede, para mostrar o
+     * tamanho do erro de traçado em cada zona que tem referência.
+     *
+     * @return array<string, float> zona => razão entre o medido e o impresso
+     */
+    private function conferirTracado(float $escala): array
+    {
+        $razoes = [];
+
+        foreach (self::ZONAS as [$id, , , , , $pontos]) {
+            if (isset(self::AREA_IMPRESSA[$id])) {
+                $razoes[$id] = $this->areaDoPoligono($pontos) * $escala / self::AREA_IMPRESSA[$id];
             }
         }
 
-        sort($vizinhos);
-
-        return $vizinhos;
+        return $razoes;
     }
 
     /**
-     * @param  array{string, string, string, int, int, int, int}  $a
-     * @param  array{string, string, string, int, int, int, int}  $b
+     * Área do polígono pela fórmula do cadarço, em pixels².
+     *
+     * @param  list<array{int, int}>  $pontos
      */
-    private function encostam(array $a, array $b): bool
+    private function areaDoPoligono(array $pontos): float
     {
-        [, , , $ax, $ay, $al, $aa] = $a;
-        [, , , $bx, $by, $bl, $ba] = $b;
+        $soma = 0.0;
+        $total = count($pontos);
 
-        $tocaNaVertical = $ax + $al === $bx || $bx + $bl === $ax;
-        $tocaNaHorizontal = $ay + $aa === $by || $by + $ba === $ay;
-        $sobrepoeEmY = min($ay + $aa, $by + $ba) - max($ay, $by) > 0;
-        $sobrepoeEmX = min($ax + $al, $bx + $bl) - max($ax, $bx) > 0;
+        for ($i = 0; $i < $total; $i++) {
+            [$x1, $y1] = $pontos[$i];
+            [$x2, $y2] = $pontos[($i + 1) % $total];
+            $soma += $x1 * $y2 - $x2 * $y1;
+        }
 
-        return ($tocaNaVertical && $sobrepoeEmY) || ($tocaNaHorizontal && $sobrepoeEmX);
+        return abs($soma) / 2;
     }
 
     /**
-     * Área mínima e vizinhança simétrica (RNF04).
+     * Centro da zona em metros, medido do canto superior esquerdo da planta.
+     *
+     * @param  list<array{int, int}>  $pontos
+     * @return list<float>
+     */
+    private function centroide(array $pontos, float $escala): array
+    {
+        $metrosPorPixel = sqrt($escala);
+
+        return [
+            round(array_sum(array_column($pontos, 0)) / count($pontos) * $metrosPorPixel, 1),
+            round(array_sum(array_column($pontos, 1)) / count($pontos) * $metrosPorPixel, 1),
+        ];
+    }
+
+    /**
+     * Área mínima, tipo aceito e vizinhança simétrica (RNF04).
      *
      * @param  list<array<string, mixed>>  $zonas
      */
@@ -134,10 +205,15 @@ class GerarZonas extends Command
     {
         $porId = collect($zonas)->keyBy('id');
         $areaMinima = (int) config('mapa.area_min_m2');
+        $tipos = config('mapa.tipos_de_zona');
 
         foreach ($zonas as $zona) {
             if ($zona['area_m2'] < $areaMinima) {
-                return "{$zona['id']} tem menos de {$areaMinima} m².";
+                return "{$zona['id']} ficou com {$zona['area_m2']} m², menos que o mínimo de {$areaMinima}.";
+            }
+
+            if (! in_array($zona['tipo'], $tipos, strict: true)) {
+                return "{$zona['id']}: tipo \"{$zona['tipo']}\" não é aceito.";
             }
 
             foreach ($zona['vizinhos'] as $vizinho) {
@@ -152,5 +228,40 @@ class GerarZonas extends Command
         }
 
         return null;
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $zonas
+     */
+    private function relatar(array $zonas, float $escala): void
+    {
+        $this->info(count($zonas).' zonas gravadas em '.database_path('dados/zonas.json'));
+
+        $this->line(sprintf(
+            'Escala da planta (config/mapa.php): 1 metro = %.2f pixels.',
+            (float) config('mapa.planta.pixels_por_metro')
+        ));
+
+        foreach ($this->conferirTracado($escala) as $id => $razao) {
+            $this->line(sprintf(
+                '  %s: meu polígono mede %+.0f%% da área impressa na planta.',
+                $id,
+                ($razao - 1) * 100
+            ));
+        }
+
+        $this->table(
+            ['id', 'nome', 'tipo', 'piso', 'área (m²)', 'origem da área'],
+            array_map(fn (array $zona): array => [
+                $zona['id'],
+                $zona['nome'],
+                $zona['tipo'],
+                $zona['piso'],
+                $zona['area_m2'],
+                $zona['area_da_planta'] ? 'impressa na planta' : 'estimada do polígono',
+            ], $zonas),
+        );
+
+        $this->line('Circulação mapeada: '.array_sum(array_column($zonas, 'area_m2')).' m².');
     }
 }

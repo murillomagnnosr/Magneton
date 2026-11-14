@@ -9,8 +9,9 @@ use RuntimeException;
 /**
  * Carrega as regiões do piso a partir da planta.
  *
- * O arquivo `database/dados/zonas.json` é gerado da planta da Entrega 1. Trocar a planta
- * é trocar esse arquivo e rodar o seeder de novo.
+ * `database/dados/zonas.json` é gerado por `php artisan mapa:gerar-zonas` a partir da
+ * planta real do shopping. Trocar a planta é mexer naquele comando e rodar este seeder
+ * de novo.
  */
 class ZonaSeeder extends Seeder
 {
@@ -22,18 +23,21 @@ class ZonaSeeder extends Seeder
             throw new RuntimeException("Arquivo de zonas não encontrado em {$caminho}.");
         }
 
-        /** @var list<array<string, mixed>> $zonas */
-        $zonas = json_decode((string) file_get_contents($caminho), associative: true, flags: JSON_THROW_ON_ERROR);
+        /** @var array{planta: array<string, mixed>, zonas: list<array<string, mixed>>} $arquivo */
+        $arquivo = json_decode((string) file_get_contents($caminho), associative: true, flags: JSON_THROW_ON_ERROR);
+
+        $this->conferirPlanta($arquivo['planta'] ?? []);
 
         $tiposAceitos = config('mapa.tipos_de_zona');
         $areaMinima = (int) config('mapa.area_min_m2');
 
-        foreach ($zonas as $zona) {
+        foreach ($arquivo['zonas'] as $zona) {
             $this->conferir($zona, $tiposAceitos, $areaMinima);
 
             Zona::query()->updateOrCreate(['id' => $zona['id']], [
                 'nome' => $zona['nome'],
                 'tipo' => $zona['tipo'],
+                'piso' => $zona['piso'] ?? 1,
                 'area_m2' => $zona['area_m2'],
                 'centroide_x' => $zona['centroide'][0],
                 'centroide_y' => $zona['centroide'][1],
@@ -42,7 +46,36 @@ class ZonaSeeder extends Seeder
             ]);
         }
 
-        $this->command?->info(count($zonas).' zonas carregadas.');
+        // Zona que saiu da planta não pode continuar no banco com contagem pendurada.
+        $sumidas = Zona::query()->whereNotIn('id', array_column($arquivo['zonas'], 'id'))->pluck('id');
+
+        if ($sumidas->isNotEmpty()) {
+            $this->command?->warn('Zonas que não estão mais na planta: '.$sumidas->implode(', ')
+                .'. Apague as contagens delas antes de removê-las.');
+        }
+
+        $this->command?->info(count($arquivo['zonas']).' zonas carregadas.');
+    }
+
+    /**
+     * O arquivo e a configuração têm de falar da mesma planta, senão os polígonos saem
+     * em um sistema de coordenadas e o painel desenha em outro.
+     *
+     * @param  array<string, mixed>  $planta
+     */
+    private function conferirPlanta(array $planta): void
+    {
+        foreach (['largura', 'altura'] as $medida) {
+            $doArquivo = $planta[$medida] ?? null;
+            $daConfig = config("mapa.planta.{$medida}");
+
+            if ($doArquivo !== $daConfig) {
+                throw new RuntimeException(
+                    "A planta do zonas.json tem {$medida} {$doArquivo}, mas config/mapa.php diz {$daConfig}. "
+                    .'Rode `php artisan mapa:gerar-zonas` depois de acertar os dois.'
+                );
+            }
+        }
     }
 
     /**
@@ -59,6 +92,10 @@ class ZonaSeeder extends Seeder
 
         if ($zona['area_m2'] < $areaMinima) {
             throw new RuntimeException("Zona {$zona['id']}: área menor que {$areaMinima} m².");
+        }
+
+        if (count($zona['planta']['pontos'] ?? []) < 3) {
+            throw new RuntimeException("Zona {$zona['id']}: o polígono precisa de ao menos 3 pontos.");
         }
     }
 }

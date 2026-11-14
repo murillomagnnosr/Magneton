@@ -1,356 +1,851 @@
-[
-    {
-        "id": "Z01",
-        "nome": "Âncora",
-        "tipo": "ancora",
-        "area_m2": 433,
-        "centroide": [
-            16.8,
-            6.5
-        ],
-        "vizinhos": [
-            "Z02",
-            "Z04",
-            "Z05"
-        ],
-        "planta": {
-            "x": 0,
-            "y": 0,
-            "largura": 260,
-            "altura": 100
-        }
+{
+    "planta": {
+        "imagem": "planta-piso1.jpg",
+        "largura": 2740,
+        "altura": 1820,
+        "recorte": {
+            "x": 120,
+            "y": 40,
+            "largura": 2360,
+            "altura": 1740
+        },
+        "pixels_por_metro": 11.3,
+        "descricao": "Capim Dourado Shopping, 1º pavimento (térreo). Planta Mix de Operações, novembro de 2026, folha 1/2."
     },
-    {
-        "id": "Z02",
-        "nome": "Lojas Norte",
-        "tipo": "lojas",
-        "area_m2": 450,
-        "centroide": [
-            51,
-            6.5
-        ],
-        "vizinhos": [
-            "Z01",
-            "Z03",
-            "Z05"
-        ],
-        "planta": {
-            "x": 260,
-            "y": 0,
-            "largura": 270,
-            "altura": 100
+    "zonas": [
+        {
+            "id": "Z01",
+            "nome": "Praça de Alimentação",
+            "tipo": "alimentacao",
+            "piso": 2,
+            "area_m2": 1811,
+            "area_da_planta": false,
+            "centroide": [
+                31.3,
+                120.9
+            ],
+            "vizinhos": [
+                "Z04"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        82,
+                        1214
+                    ],
+                    [
+                        216,
+                        1151
+                    ],
+                    [
+                        432,
+                        1132
+                    ],
+                    [
+                        591,
+                        1151
+                    ],
+                    [
+                        639,
+                        1233
+                    ],
+                    [
+                        630,
+                        1377
+                    ],
+                    [
+                        577,
+                        1512
+                    ],
+                    [
+                        466,
+                        1598
+                    ],
+                    [
+                        312,
+                        1618
+                    ],
+                    [
+                        178,
+                        1579
+                    ],
+                    [
+                        82,
+                        1483
+                    ],
+                    [
+                        43,
+                        1348
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z02",
+            "nome": "Mall da C&A",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 821,
+            "area_da_planta": false,
+            "centroide": [
+                86.2,
+                75.2
+            ],
+            "vizinhos": [
+                "Z03",
+                "Z11"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        458,
+                        985
+                    ],
+                    [
+                        589,
+                        1005
+                    ],
+                    [
+                        713,
+                        995
+                    ],
+                    [
+                        833,
+                        975
+                    ],
+                    [
+                        956,
+                        939
+                    ],
+                    [
+                        1059,
+                        882
+                    ],
+                    [
+                        1141,
+                        827
+                    ],
+                    [
+                        1245,
+                        798
+                    ],
+                    [
+                        1370,
+                        784
+                    ],
+                    [
+                        1448,
+                        798
+                    ],
+                    [
+                        1466,
+                        698
+                    ],
+                    [
+                        1370,
+                        682
+                    ],
+                    [
+                        1225,
+                        698
+                    ],
+                    [
+                        1099,
+                        735
+                    ],
+                    [
+                        1007,
+                        796
+                    ],
+                    [
+                        918,
+                        845
+                    ],
+                    [
+                        811,
+                        875
+                    ],
+                    [
+                        701,
+                        895
+                    ],
+                    [
+                        593,
+                        903
+                    ],
+                    [
+                        474,
+                        885
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z03",
+            "nome": "Mall Noroeste",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 235,
+            "area_da_planta": false,
+            "centroide": [
+                29.9,
+                92
+            ],
+            "vizinhos": [
+                "Z02",
+                "Z04"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        437,
+                        900
+                    ],
+                    [
+                        379,
+                        949
+                    ],
+                    [
+                        313,
+                        1006
+                    ],
+                    [
+                        241,
+                        1059
+                    ],
+                    [
+                        178,
+                        1113
+                    ],
+                    [
+                        236,
+                        1181
+                    ],
+                    [
+                        297,
+                        1129
+                    ],
+                    [
+                        369,
+                        1076
+                    ],
+                    [
+                        437,
+                        1017
+                    ],
+                    [
+                        495,
+                        970
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z04",
+            "nome": "Mall da Renner",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 303,
+            "area_da_planta": false,
+            "centroide": [
+                37.7,
+                101.6
+            ],
+            "vizinhos": [
+                "Z01",
+                "Z03",
+                "Z05"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        211,
+                        1192
+                    ],
+                    [
+                        362,
+                        1177
+                    ],
+                    [
+                        498,
+                        1182
+                    ],
+                    [
+                        617,
+                        1218
+                    ],
+                    [
+                        643,
+                        1132
+                    ],
+                    [
+                        512,
+                        1092
+                    ],
+                    [
+                        358,
+                        1087
+                    ],
+                    [
+                        203,
+                        1102
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z05",
+            "nome": "Mall Stilo",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 239,
+            "area_da_planta": false,
+            "centroide": [
+                66.4,
+                113.5
+            ],
+            "vizinhos": [
+                "Z04",
+                "Z06",
+                "Z09"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        630,
+                        1230
+                    ],
+                    [
+                        681,
+                        1227
+                    ],
+                    [
+                        709,
+                        1255
+                    ],
+                    [
+                        742,
+                        1320
+                    ],
+                    [
+                        775,
+                        1394
+                    ],
+                    [
+                        789,
+                        1436
+                    ],
+                    [
+                        875,
+                        1406
+                    ],
+                    [
+                        859,
+                        1360
+                    ],
+                    [
+                        824,
+                        1280
+                    ],
+                    [
+                        781,
+                        1201
+                    ],
+                    [
+                        713,
+                        1143
+                    ],
+                    [
+                        630,
+                        1140
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z06",
+            "nome": "Mall Oeste",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 261,
+            "area_da_planta": false,
+            "centroide": [
+                88.1,
+                123.3
+            ],
+            "vizinhos": [
+                "Z05",
+                "Z07"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        832,
+                        1472
+                    ],
+                    [
+                        921,
+                        1472
+                    ],
+                    [
+                        1018,
+                        1460
+                    ],
+                    [
+                        1107,
+                        1421
+                    ],
+                    [
+                        1170,
+                        1375
+                    ],
+                    [
+                        1108,
+                        1293
+                    ],
+                    [
+                        1057,
+                        1333
+                    ],
+                    [
+                        992,
+                        1362
+                    ],
+                    [
+                        915,
+                        1370
+                    ],
+                    [
+                        832,
+                        1370
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z07",
+            "nome": "Praça de Eventos Central",
+            "tipo": "convivencia",
+            "piso": 1,
+            "area_m2": 266,
+            "area_da_planta": true,
+            "centroide": [
+                111.6,
+                112.4
+            ],
+            "vizinhos": [
+                "Z06",
+                "Z08",
+                "Z09"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        1139,
+                        1204
+                    ],
+                    [
+                        1207,
+                        1147
+                    ],
+                    [
+                        1293,
+                        1137
+                    ],
+                    [
+                        1360,
+                        1185
+                    ],
+                    [
+                        1384,
+                        1267
+                    ],
+                    [
+                        1356,
+                        1353
+                    ],
+                    [
+                        1279,
+                        1401
+                    ],
+                    [
+                        1192,
+                        1397
+                    ],
+                    [
+                        1139,
+                        1339
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z08",
+            "nome": "Mall Leste",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 414,
+            "area_da_planta": false,
+            "centroide": [
+                143.6,
+                119.8
+            ],
+            "vizinhos": [
+                "Z07",
+                "Z10"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        1355,
+                        1330
+                    ],
+                    [
+                        1452,
+                        1359
+                    ],
+                    [
+                        1558,
+                        1388
+                    ],
+                    [
+                        1664,
+                        1421
+                    ],
+                    [
+                        1770,
+                        1450
+                    ],
+                    [
+                        1859,
+                        1471
+                    ],
+                    [
+                        1881,
+                        1371
+                    ],
+                    [
+                        1796,
+                        1352
+                    ],
+                    [
+                        1692,
+                        1323
+                    ],
+                    [
+                        1586,
+                        1290
+                    ],
+                    [
+                        1480,
+                        1261
+                    ],
+                    [
+                        1385,
+                        1232
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z09",
+            "nome": "Mall Sul",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 508,
+            "area_da_planta": false,
+            "centroide": [
+                97.3,
+                134.8
+            ],
+            "vizinhos": [
+                "Z05",
+                "Z07",
+                "Z10"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        802,
+                        1486
+                    ],
+                    [
+                        878,
+                        1539
+                    ],
+                    [
+                        987,
+                        1567
+                    ],
+                    [
+                        1132,
+                        1581
+                    ],
+                    [
+                        1272,
+                        1605
+                    ],
+                    [
+                        1434,
+                        1647
+                    ],
+                    [
+                        1460,
+                        1549
+                    ],
+                    [
+                        1294,
+                        1505
+                    ],
+                    [
+                        1146,
+                        1481
+                    ],
+                    [
+                        1003,
+                        1467
+                    ],
+                    [
+                        920,
+                        1447
+                    ],
+                    [
+                        862,
+                        1404
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z10",
+            "nome": "Mall do Cinemark",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 733,
+            "area_da_planta": false,
+            "centroide": [
+                128.9,
+                107.4
+            ],
+            "vizinhos": [
+                "Z08",
+                "Z09",
+                "Z11"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        1401,
+                        772
+                    ],
+                    [
+                        1401,
+                        935
+                    ],
+                    [
+                        1401,
+                        1127
+                    ],
+                    [
+                        1401,
+                        1329
+                    ],
+                    [
+                        1401,
+                        1512
+                    ],
+                    [
+                        1401,
+                        1608
+                    ],
+                    [
+                        1513,
+                        1608
+                    ],
+                    [
+                        1513,
+                        1512
+                    ],
+                    [
+                        1513,
+                        1329
+                    ],
+                    [
+                        1513,
+                        1127
+                    ],
+                    [
+                        1513,
+                        935
+                    ],
+                    [
+                        1513,
+                        772
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z11",
+            "nome": "Galeria do STZ",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 752,
+            "area_da_planta": false,
+            "centroide": [
+                170.2,
+                66.5
+            ],
+            "vizinhos": [
+                "Z02",
+                "Z10"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        1476,
+                        803
+                    ],
+                    [
+                        1658,
+                        803
+                    ],
+                    [
+                        1899,
+                        803
+                    ],
+                    [
+                        2168,
+                        803
+                    ],
+                    [
+                        2418,
+                        803
+                    ],
+                    [
+                        2418,
+                        701
+                    ],
+                    [
+                        2168,
+                        701
+                    ],
+                    [
+                        1899,
+                        701
+                    ],
+                    [
+                        1658,
+                        701
+                    ],
+                    [
+                        1476,
+                        701
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z12",
+            "nome": "Galeria do Big",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 284,
+            "area_da_planta": false,
+            "centroide": [
+                171,
+                24.8
+            ],
+            "vizinhos": [
+                "Z13"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        1881,
+                        98
+                    ],
+                    [
+                        1881,
+                        223
+                    ],
+                    [
+                        1881,
+                        348
+                    ],
+                    [
+                        1881,
+                        454
+                    ],
+                    [
+                        1983,
+                        454
+                    ],
+                    [
+                        1983,
+                        348
+                    ],
+                    [
+                        1983,
+                        223
+                    ],
+                    [
+                        1983,
+                        98
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "Z13",
+            "nome": "Galeria da Pernambucanas",
+            "tipo": "corredor",
+            "piso": 1,
+            "area_m2": 376,
+            "area_da_planta": false,
+            "centroide": [
+                192.9,
+                40.2
+            ],
+            "vizinhos": [
+                "Z12"
+            ],
+            "planta": {
+                "pontos": [
+                    [
+                        1947,
+                        505
+                    ],
+                    [
+                        2101,
+                        505
+                    ],
+                    [
+                        2255,
+                        505
+                    ],
+                    [
+                        2418,
+                        505
+                    ],
+                    [
+                        2418,
+                        403
+                    ],
+                    [
+                        2255,
+                        403
+                    ],
+                    [
+                        2101,
+                        403
+                    ],
+                    [
+                        1947,
+                        403
+                    ]
+                ]
+            }
         }
-    },
-    {
-        "id": "Z03",
-        "nome": "Lojas Ala Norte",
-        "tipo": "lojas",
-        "area_m2": 450,
-        "centroide": [
-            85.9,
-            6.5
-        ],
-        "vizinhos": [
-            "Z02",
-            "Z05",
-            "Z06"
-        ],
-        "planta": {
-            "x": 530,
-            "y": 0,
-            "largura": 270,
-            "altura": 100
-        }
-    },
-    {
-        "id": "Z04",
-        "nome": "Entrada Oeste",
-        "tipo": "entrada",
-        "area_m2": 92,
-        "centroide": [
-            7.1,
-            16.1
-        ],
-        "vizinhos": [
-            "Z01",
-            "Z05",
-            "Z08"
-        ],
-        "planta": {
-            "x": 0,
-            "y": 100,
-            "largura": 110,
-            "altura": 50
-        }
-    },
-    {
-        "id": "Z05",
-        "nome": "Corredor Norte",
-        "tipo": "corredor",
-        "area_m2": 483,
-        "centroide": [
-            51.6,
-            16.1
-        ],
-        "vizinhos": [
-            "Z01",
-            "Z02",
-            "Z03",
-            "Z04",
-            "Z06",
-            "Z07",
-            "Z08",
-            "Z09",
-            "Z10",
-            "Z11",
-            "Z12"
-        ],
-        "planta": {
-            "x": 110,
-            "y": 100,
-            "largura": 580,
-            "altura": 50
-        }
-    },
-    {
-        "id": "Z06",
-        "nome": "Entrada Leste",
-        "tipo": "entrada",
-        "area_m2": 92,
-        "centroide": [
-            96.2,
-            16.1
-        ],
-        "vizinhos": [
-            "Z03",
-            "Z05",
-            "Z12"
-        ],
-        "planta": {
-            "x": 690,
-            "y": 100,
-            "largura": 110,
-            "altura": 50
-        }
-    },
-    {
-        "id": "Z07",
-        "nome": "Praça de alimentação",
-        "tipo": "alimentacao",
-        "area_m2": 600,
-        "centroide": [
-            43.9,
-            31
-        ],
-        "vizinhos": [
-            "Z05",
-            "Z09",
-            "Z10",
-            "Z13"
-        ],
-        "planta": {
-            "x": 240,
-            "y": 150,
-            "largura": 200,
-            "altura": 180
-        }
-    },
-    {
-        "id": "Z08",
-        "nome": "Lojas Oeste",
-        "tipo": "lojas",
-        "area_m2": 540,
-        "centroide": [
-            11.6,
-            31
-        ],
-        "vizinhos": [
-            "Z04",
-            "Z05",
-            "Z09",
-            "Z13"
-        ],
-        "planta": {
-            "x": 0,
-            "y": 150,
-            "largura": 180,
-            "altura": 180
-        }
-    },
-    {
-        "id": "Z09",
-        "nome": "Corredor Oeste",
-        "tipo": "corredor",
-        "area_m2": 180,
-        "centroide": [
-            27.1,
-            31
-        ],
-        "vizinhos": [
-            "Z05",
-            "Z07",
-            "Z08",
-            "Z13"
-        ],
-        "planta": {
-            "x": 180,
-            "y": 150,
-            "largura": 60,
-            "altura": 180
-        }
-    },
-    {
-        "id": "Z10",
-        "nome": "Convivência",
-        "tipo": "convivencia",
-        "area_m2": 360,
-        "centroide": [
-            64.5,
-            31
-        ],
-        "vizinhos": [
-            "Z05",
-            "Z07",
-            "Z11",
-            "Z13"
-        ],
-        "planta": {
-            "x": 440,
-            "y": 150,
-            "largura": 120,
-            "altura": 180
-        }
-    },
-    {
-        "id": "Z11",
-        "nome": "Corredor Leste",
-        "tipo": "corredor",
-        "area_m2": 180,
-        "centroide": [
-            76.2,
-            31
-        ],
-        "vizinhos": [
-            "Z05",
-            "Z10",
-            "Z12",
-            "Z13"
-        ],
-        "planta": {
-            "x": 560,
-            "y": 150,
-            "largura": 60,
-            "altura": 180
-        }
-    },
-    {
-        "id": "Z12",
-        "nome": "Lojas Leste",
-        "tipo": "lojas",
-        "area_m2": 540,
-        "centroide": [
-            91.7,
-            31
-        ],
-        "vizinhos": [
-            "Z05",
-            "Z06",
-            "Z11",
-            "Z13"
-        ],
-        "planta": {
-            "x": 620,
-            "y": 150,
-            "largura": 180,
-            "altura": 180
-        }
-    },
-    {
-        "id": "Z13",
-        "nome": "Corredor Principal",
-        "tipo": "corredor",
-        "area_m2": 667,
-        "centroide": [
-            51.6,
-            45.8
-        ],
-        "vizinhos": [
-            "Z07",
-            "Z08",
-            "Z09",
-            "Z10",
-            "Z11",
-            "Z12",
-            "Z14",
-            "Z15",
-            "Z16"
-        ],
-        "planta": {
-            "x": 0,
-            "y": 330,
-            "largura": 800,
-            "altura": 50
-        }
-    },
-    {
-        "id": "Z14",
-        "nome": "Lojas Sul A",
-        "tipo": "lojas",
-        "area_m2": 500,
-        "centroide": [
-            19.4,
-            55.5
-        ],
-        "vizinhos": [
-            "Z13",
-            "Z15"
-        ],
-        "planta": {
-            "x": 0,
-            "y": 380,
-            "largura": 300,
-            "altura": 100
-        }
-    },
-    {
-        "id": "Z15",
-        "nome": "Entrada Principal",
-        "tipo": "entrada",
-        "area_m2": 333,
-        "centroide": [
-            51.6,
-            55.5
-        ],
-        "vizinhos": [
-            "Z13",
-            "Z14",
-            "Z16"
-        ],
-        "planta": {
-            "x": 300,
-            "y": 380,
-            "largura": 200,
-            "altura": 100
-        }
-    },
-    {
-        "id": "Z16",
-        "nome": "Lojas Sul B",
-        "tipo": "lojas",
-        "area_m2": 500,
-        "centroide": [
-            83.9,
-            55.5
-        ],
-        "vizinhos": [
-            "Z13",
-            "Z15"
-        ],
-        "planta": {
-            "x": 500,
-            "y": 380,
-            "largura": 300,
-            "altura": 100
-        }
-    }
-]
+    ]
+}

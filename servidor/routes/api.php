@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\Ingestao\AoVivoController as IngestaoAoVivoController;
 use App\Http\Controllers\Api\Ingestao\ContagemController as IngestaoContagemController;
+use App\Http\Controllers\Api\V1\AoVivoController;
 use App\Http\Controllers\Api\V1\ContagemController;
 use App\Http\Controllers\Api\V1\CurvaController;
+use App\Http\Controllers\Api\V1\DiaController;
 use App\Http\Controllers\Api\V1\PicoController;
 use App\Http\Controllers\Api\V1\ResumoController;
 use App\Http\Controllers\Api\V1\ZonaController;
@@ -24,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('ingestao/v1')->middleware(TokenDeIngestao::class)->name('ingestao.')->group(function (): void {
     Route::post('contagens', [IngestaoContagemController::class, 'store'])->name('contagens.store');
     Route::delete('contagens', [IngestaoContagemController::class, 'destroy'])->name('contagens.destroy');
+    Route::post('ao-vivo', [IngestaoAoVivoController::class, 'store'])->name('ao-vivo.store');
 });
 
 /*
@@ -41,6 +45,8 @@ Route::prefix('v1')->name('v1.')->group(function (): void {
     Route::get('zonas/{zona}/curva', [CurvaController::class, 'show'])->name('zonas.curva');
     Route::get('contagens', [ContagemController::class, 'index'])->name('contagens.index');
     Route::get('pico', [PicoController::class, 'index'])->name('pico.index');
+    Route::get('dia', [DiaController::class, 'show'])->name('dia.show');
+    Route::get('ao-vivo', [AoVivoController::class, 'index'])->name('ao-vivo.index');
     Route::get('resumo', [ResumoController::class, 'index'])->name('resumo.index');
 
     // Parâmetros que o painel e o worker precisam conhecer. O token de ingestão fica de fora.
@@ -53,6 +59,11 @@ Route::prefix('v1')->name('v1.')->group(function (): void {
         'fonte' => Contagem::query()->distinct()->limit(2)->pluck('fonte')->count() === 1
             ? Contagem::query()->value('fonte')
             : null,
+        // dias com contagem, do mais recente para o mais antigo: alimenta o seletor do painel
+        'dias' => Contagem::query()
+            ->selectRaw('DISTINCT substr(inicio_janela, 1, 10) AS dia')
+            ->orderByDesc('dia')
+            ->pluck('dia'),
         'limiar_k' => config('mapa.k'),
         'duracao_min' => config('mapa.duracao_min'),
     ])->name('saude');

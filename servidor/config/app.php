@@ -65,7 +65,10 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    // O contrato de dados é em hora local ("inicio_janela: hora local, sem segundos"), e o
+    // horário de funcionamento também. Deixar o servidor em UTC faria toda medição chegar
+    // com horas de diferença e ser descartada por velha.
+    'timezone' => env('APP_TIMEZONE', 'America/Sao_Paulo'),
 
     /*
     |--------------------------------------------------------------------------

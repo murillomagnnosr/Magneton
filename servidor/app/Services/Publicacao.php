@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Zona;
+use Illuminate\Support\Collection;
 
 /**
  * Camada de publicação: nada sai da API de transmissão sem passar por aqui.
@@ -87,6 +88,33 @@ class Publicacao
             'densidade_100m2' => $densidade,
             'janelas' => count($contagens),
         ];
+    }
+
+    /**
+     * Densidade média do piso, em pessoas por 100 m².
+     *
+     * Soma só as zonas que têm número publicado, como manda o passo 5 do algoritmo. É a
+     * régua que torna a contagem de uma zona compreensível: "3,2× a média do piso" diz
+     * mais do que "14,73 pessoas por 100 m²".
+     *
+     * @param  list<array<string, mixed>>  $publicados  saídas de janela() ou periodo()
+     */
+    public function densidadeDoPiso(array $publicados, Collection $zonas): ?float
+    {
+        $pessoas = 0.0;
+        $area = 0;
+
+        foreach ($publicados as $publicado) {
+            if (! isset($publicado['densidade_100m2'])) {
+                continue;
+            }
+
+            $zona = $zonas->get($publicado['zona_id']);
+            $pessoas += $publicado['pessoas'] ?? $publicado['pessoas_media'];
+            $area += $zona->area_m2;
+        }
+
+        return $area > 0 ? round(100 * $pessoas / $area, 2) : null;
     }
 
     /**

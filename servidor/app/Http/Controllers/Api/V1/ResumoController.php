@@ -45,6 +45,8 @@ class ResumoController extends Controller
             'dia' => $dia,
             'periodo' => $periodo,
             'limiar' => $this->publicacao->limiar(),
+            // a régua que torna a contagem de uma zona compreensível
+            'densidade_do_piso' => $this->publicacao->densidadeDoPiso($ranking->all(), $this->consulta->zonas()),
             'fonte' => $this->fonteDoConjunto(),
             'regiao_mais_movimentada' => $comNumero->first(),
             'regiao_menos_movimentada' => $comNumero->last(),

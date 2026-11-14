@@ -27,6 +27,16 @@
         <env name="DB_DATABASE" value=":memory:"/>
         <env name="DB_URL" value=""/>
         <env name="MAIL_MAILER" value="array"/>
+        <!-- Os parâmetros do mapa ficam fixos aqui: um ajuste temporário no .env, como
+             baixar o limiar para testar a câmera, não pode mudar o que a suíte verifica. -->
+        <env name="APP_TIMEZONE" value="America/Sao_Paulo"/>
+        <env name="MAPA_K" value="5"/>
+        <env name="MAPA_LIMIAR_AO_VIVO" value="5"/>
+        <env name="MAPA_DURACAO_MIN" value="15"/>
+        <env name="MAPA_HORARIO_ABRE" value="10:00"/>
+        <env name="MAPA_HORARIO_FECHA" value="22:00"/>
+        <env name="MAPA_AO_VIVO_VALIDO_POR_S" value="15"/>
+        <env name="MAPA_TOKEN_INGESTAO" value=""/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
