@@ -19,6 +19,7 @@ const estadoInicial = {
   // o que veio da API
   config: null,
   saude: null,
+  panorama: null, // o padrão da semana, para o bloco do topo
   zonas: [],
   porZona: {}, // zona_id => o que a camada de publicação liberou
   densidadeDoPiso: null,
@@ -74,12 +75,18 @@ export function DashboardProvider({ children }) {
   useEffect(() => {
     let cancelado = false;
 
-    Promise.all([api.zonas(), api.config(), api.saude()])
-      .then(([zonas, config, saude]) => {
+    Promise.all([
+      api.zonas(),
+      api.config(),
+      api.saude(),
+      // sem contagem nenhuma o panorama responde 404, e a tela segue sem o bloco do topo
+      api.panorama().catch(() => null),
+    ])
+      .then(([zonas, config, saude, panorama]) => {
         if (cancelado) return;
         dispatch({
           type: 'BASE_CARREGADA',
-          payload: { zonas, config, saude, dia: saude.dias?.[0] ?? null },
+          payload: { zonas, config, saude, panorama, dia: saude.dias?.[0] ?? null },
         });
       })
       .catch((erro) => !cancelado && dispatch({ type: 'FALHOU', payload: erro.message }));

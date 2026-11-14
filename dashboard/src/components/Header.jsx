@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import { Activity, ShieldCheck } from 'lucide-react';
+import { Activity } from 'lucide-react';
 
 // O selo que dizia "Dados simulados" / "Dados medidos por câmera" foi retirado a pedido.
 //
@@ -8,6 +8,9 @@ import { Activity, ShieldCheck } from 'lucide-react';
 // como real"). A fonte continua no contrato e em /v1/resumo e /v1/saude, então quem
 // consome a API sabe a origem; o que sumiu foi o aviso na tela. Para trazer de volta,
 // basta voltar o bloco de selo que estava aqui.
+//
+// O selo "limiar k = 5 · N registros" também saiu, a pedido. O limiar continua escrito
+// onde ele muda o que a tela diz: na legenda do mapa, no ranking e no panorama do topo.
 
 export default function Header() {
   const { state } = useContext(DashboardContext);
@@ -34,12 +37,6 @@ export default function Header() {
         </div>
       </div>
 
-      {state.saude && (
-        <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#94a3b8', fontSize: '0.78rem' }}>
-          <ShieldCheck size={14} color="#38bdf8" />
-          limiar k = {state.saude.limiar_k} · {state.saude.registros.toLocaleString('pt-BR')} registros
-        </span>
-      )}
     </header>
   );
 }

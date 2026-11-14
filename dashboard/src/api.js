@@ -42,6 +42,7 @@ export const api = {
   dia: (dia) => buscar('dia', { dia }),
   aoVivo: () => buscar('ao-vivo'),
   pico: (dia, periodo) => buscar('pico', { dia, periodo }),
+  panorama: () => buscar('panorama'),
   doPeriodo: (dia, periodo) => buscar('contagens', { dia, periodo }),
   daJanela: (dia, janela) => buscar('contagens', { dia, janela }),
   curva: (zonaId, dia) => buscar(`zonas/${zonaId}/curva`, { dia }),
@@ -86,6 +87,13 @@ export function rotuloDaJanela(janela, duracaoMin = 15) {
   const fim = hora * 60 + minuto + duracaoMin;
 
   return `${janela}–${String(Math.floor(fim / 60)).padStart(2, '0')}:${String(fim % 60).padStart(2, '0')}`;
+}
+
+/** "13:00" vira "13h"; "13:30" vira "13h30". */
+export function hora(valor) {
+  if (!valor) return '—';
+  const [h, m] = valor.split(':');
+  return m === '00' ? `${Number(h)}h` : `${Number(h)}h${m}`;
 }
 
 /** Número no padrão brasileiro: 14.73 vira "14,73". */

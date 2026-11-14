@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\AoVivoController;
 use App\Http\Controllers\Api\V1\ContagemController;
 use App\Http\Controllers\Api\V1\CurvaController;
 use App\Http\Controllers\Api\V1\DiaController;
+use App\Http\Controllers\Api\V1\PanoramaController;
 use App\Http\Controllers\Api\V1\PicoController;
 use App\Http\Controllers\Api\V1\ResumoController;
 use App\Http\Controllers\Api\V1\ZonaController;
@@ -46,6 +47,7 @@ Route::prefix('v1')->middleware(ChaveDeLeitura::class)->name('v1.')->group(funct
     Route::get('zonas/{zona}/curva', [CurvaController::class, 'show'])->name('zonas.curva');
     Route::get('contagens', [ContagemController::class, 'index'])->name('contagens.index');
     Route::get('pico', [PicoController::class, 'index'])->name('pico.index');
+    Route::get('panorama', [PanoramaController::class, 'index'])->name('panorama');
     Route::get('dia', [DiaController::class, 'show'])->name('dia.show');
     Route::get('ao-vivo', [AoVivoController::class, 'index'])->name('ao-vivo.index');
     Route::get('resumo', [ResumoController::class, 'index'])->name('resumo.index');
