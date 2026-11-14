@@ -28,10 +28,10 @@ class TransmissaoTest extends TestCase
     }
 
     /** A zona que enche no pico do almoço. */
-    private const CHEIA = 'Z02';
+    private const CHEIA = 'Z07';
 
     /** A zona de movimento constante, usada para comparar. */
-    private const CONSTANTE = 'Z11';
+    private const CONSTANTE = 'Z08';
 
     /** A zona que nunca passa do limiar. */
     private const VAZIA = 'Z03';

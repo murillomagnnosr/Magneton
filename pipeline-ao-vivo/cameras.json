@@ -19,8 +19,8 @@
     },
     {
       "id": "cam2",
-      "nome": "Mall da C&A",
-      "zona_id": "Z02",
+      "nome": "Mall Leste",
+      "zona_id": "Z08",
       "url": "rtsp://127.0.0.1:8554/live/cam2",
       "linha": null
     }
