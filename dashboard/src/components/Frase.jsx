@@ -13,7 +13,7 @@ export default function Frase() {
   const olhando = state.zonaSobrevoada ?? state.zonaSelecionada;
 
   return (
-    <section className="cartao frase">
+    <section className="cartao frase hero__frase">
       <span className="frase__faixa" style={{ background: corDoDestaque(destaque) }} />
 
       <p className="frase__titulo">{titulo}</p>

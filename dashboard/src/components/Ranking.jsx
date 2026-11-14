@@ -83,7 +83,7 @@ export default function Ranking() {
       )}
 
       <ul className="lista-zonas">
-        {linhas.map(({ zona, publicado, vezes, pessoas }) => {
+        {linhas.map(({ zona, publicado, vezes, pessoas }, posicao) => {
           const selecionada = state.zonaSelecionada === zona.id;
           const classe = publicado?.classe ?? 'sem_dado';
 
@@ -97,6 +97,8 @@ export default function Ranking() {
                 onMouseEnter={() => sobrevoarZona(zona.id)}
                 onMouseLeave={() => sobrevoarZona(null)}
               >
+                <span className="zona-linha__posicao numero">{posicao + 1}</span>
+
                 <span style={{ display: 'block', minWidth: 0 }}>
                   <span className="zona-linha__nome">{zona.nome}</span>
 

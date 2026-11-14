@@ -3,9 +3,9 @@ import { DashboardContext } from '../context/DashboardContext';
 import Header from './Header';
 import Panorama from './Panorama';
 import Frase from './Frase';
+import Indicadores from './Indicadores';
 import BarraDoDia from './BarraDoDia';
 import MallMap from './MallMap';
-import MapaDaPraca from './MapaDaPraca';
 import Ranking from './Ranking';
 import AreaDetails from './AreaDetails';
 import PeriodoSelector from './PeriodoSelector';
@@ -13,12 +13,11 @@ import JanelaSelector from './JanelaSelector';
 import BotaoAoVivo from './BotaoAoVivo';
 
 // De cima para baixo, cada faixa responde uma pergunta:
-//   0. o panorama diz o que se repete toda semana, antes de qualquer filtro;
+//   0. a abertura escura diz o que se repete toda semana, antes de qualquer filtro;
 //   1. a barra de filtros escolhe o recorte, e fica grudada no topo ao rolar;
-//   2. a frase diz a conclusão do recorte escolhido;
+//   2. o hero diz a conclusão do recorte, com os quatro números ao lado;
 //   3. a barra do dia mostra a forma do dia e deixa escolher o instante;
-//   4. mapa e ranking provam: onde, e quanto;
-//   5. a praça de alimentação de novo, na planta do pavimento dela.
+//   4. mapa e ranking provam: onde, e quanto. O mapa tem os dois pavimentos em abas.
 //
 // As mesmas peças valem no modo ao vivo. O que muda é o papel delas: a barra do dia
 // deixa de ser o seletor e passa a ser o histórico ao lado do agora, e clicar nela sai
@@ -49,15 +48,17 @@ export default function Dashboard() {
           )}
         </div>
 
-        <Frase />
+        <div className="hero">
+          <Frase />
+          <Indicadores />
+        </div>
+
         <BarraDoDia />
 
         <div className="colunas">
           <MallMap />
           <Ranking />
         </div>
-
-        <MapaDaPraca />
 
         {state.zonaSelecionada && <AreaDetails />}
       </main>

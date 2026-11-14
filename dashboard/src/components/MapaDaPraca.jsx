@@ -1,61 +1,32 @@
 import React, { useContext } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import { CLASSES, comparacaoEmPalavras, numero, pessoasDe, vezesAMedia } from '../api';
-import { Layers } from 'lucide-react';
+import { CLASSES, comparacaoEmPalavras, numero } from '../api';
 
-// A praça de alimentação na folha dela, em cima do mapa do térreo — não no lugar dele.
+// A praça de alimentação na folha do pavimento dela.
 //
-// No mapa principal a praça aparece tracejada sobre a planta do térreo, porque ela fica
-// no pavimento de cima: a posição está certa, mas o desenho embaixo é de outro andar. A
-// folha 2/2 é o pavimento dela inteiro, em escala maior, e aí dá para ver onde as
-// pessoas de fato sentam.
+// Não é um cartão: é o conteúdo da aba "2º piso" dentro do mapa. Antes isto era um
+// cartão solto no fim da página, o que fazia parecer um segundo mapa de um segundo
+// lugar. É o mesmo lugar, outro andar — então é uma aba, não outra seção.
+//
+// No mapa do térreo a praça aparece tracejada, porque ela fica em cima: a posição está
+// certa, mas o desenho embaixo é de outro pavimento. Aqui ela está na planta dela, com
+// as mesas, e dá para ver onde as pessoas de fato sentam.
 //
 // É um segundo desenho da mesma zona, não uma zona nova. O número, a área e a densidade
-// continuam vindo do registro da Z01; esta tela só muda o fundo e o contorno.
+// continuam vindo do registro da Z01.
 
-export default function MapaDaPraca() {
+export default function MapaDaPraca({ planta, zona, vezes }) {
   const { state, escolherZona, sobrevoarZona } = useContext(DashboardContext);
-  const planta = state.config?.planta_praca;
-
-  if (!planta) return null;
-
-  const zona = state.zonas.find((z) => z.id === planta.zona_id);
-
-  if (!zona) return null;
 
   const publicado = state.porZona[zona.id];
   const classe = publicado?.classe ?? 'sem_dado';
-  const vezes = vezesAMedia(publicado, state.densidadeDoPiso);
-  const pessoas = pessoasDe(publicado);
   const selecionada = state.zonaSelecionada === zona.id;
   const emFoco = state.zonaSobrevoada === zona.id;
   const recorte = planta.recorte;
+  const [cx, cy] = centro(planta.poligono);
 
   return (
-    <section className="cartao">
-      <div className="cartao__cabeca">
-        <div style={{ minWidth: 0 }}>
-          <h2 className="cartao__titulo">
-            <Layers size={15} color="var(--acento)" /> {zona.nome}, de perto
-          </h2>
-          <p className="cartao__nota">
-            {planta.descricao} No mapa do térreo esta área aparece tracejada, por ser de
-            outro pavimento; aqui ela está na planta dela.
-          </p>
-        </div>
-
-        <div className="grandeza">
-          <div className="grandeza__valor numero">
-            {classe === 'abaixo_do_limiar'
-              ? `< ${publicado.limiar ?? 5}`
-              : pessoas === null ? '—' : numero(pessoas, state.aoVivo ? 0 : 1)}
-          </div>
-          <div className="grandeza__unidade">
-            {state.aoVivo ? 'pessoas agora' : 'pessoas na média do período'}
-          </div>
-        </div>
-      </div>
-
+    <>
       <svg
         viewBox={recorte
           ? `${recorte.x} ${recorte.y} ${recorte.largura} ${recorte.altura}`
@@ -90,8 +61,8 @@ export default function MapaDaPraca() {
 
         {vezes && (
           <text
-            x={centro(planta.poligono)[0]}
-            y={centro(planta.poligono)[1]}
+            x={cx}
+            y={cy}
             textAnchor="middle"
             fontSize="46"
             fontWeight="700"
@@ -119,7 +90,7 @@ export default function MapaDaPraca() {
           Área e densidade vêm do registro da zona, medido na planta marcada pelo grupo.
         </span>
       </div>
-    </section>
+    </>
   );
 }
 

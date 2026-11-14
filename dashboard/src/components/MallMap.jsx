@@ -1,18 +1,31 @@
 import React, { useContext, useState } from 'react';
 import { DashboardContext } from '../context/DashboardContext';
-import { CLASSES, numero, vezesAMedia } from '../api';
+import { CLASSES, numero, pessoasDe, vezesAMedia } from '../api';
 import { useCampoDeCalor } from '../campoDeCalor';
+import MapaDaPraca from './MapaDaPraca';
+import { Building2, Utensils } from 'lucide-react';
 
 // A planta real do shopping, com as zonas de circulação por cima.
 //
 // A imagem de fundo e o sistema de coordenadas vêm de /v1/config; os polígonos vêm de
 // /v1/zonas, no mesmo sistema. Esta tela não tem nenhuma coordenada escrita à mão:
 // trocar a planta é trocar o arquivo de zonas no servidor.
+//
+// O shopping tem dois pavimentos e o mapa tem duas abas, não dois cartões. A praça de
+// alimentação já era desenhada aqui, tracejada, por ficar no andar de cima; a aba leva
+// à folha dela, em escala maior. Como cartão separado no fim da página, parecia um
+// segundo mapa de um segundo lugar — e é o mesmo lugar, outro andar.
 
 export default function MallMap() {
   const { state, escolherZona, sobrevoarZona } = useContext(DashboardContext);
   const [suavizado, setSuavizado] = useState(true);
+  const [pavimento, setPavimento] = useState('terreo');
   const planta = state.config?.planta;
+  const plantaDaPraca = state.config?.planta_praca;
+  const zonaDaPraca = plantaDaPraca
+    ? state.zonas.find((zona) => zona.id === plantaDaPraca.zona_id)
+    : null;
+  const naPraca = pavimento === 'praca' && zonaDaPraca;
 
   const campo = useCampoDeCalor(
     state.zonas,
@@ -26,31 +39,74 @@ export default function MallMap() {
   if (state.zonas.length === 0) return <Aviso texto="A API não devolveu nenhuma zona." erro />;
   if (!planta) return <Aviso texto="A API não informou qual planta desenhar." erro />;
 
+  const publicadoDaPraca = zonaDaPraca ? state.porZona[zonaDaPraca.id] : null;
+  const vezesDaPraca = vezesAMedia(publicadoDaPraca, state.densidadeDoPiso);
+
   return (
     <section className="cartao">
       <div className="cartao__cabeca">
         <div style={{ minWidth: 0 }}>
           <h2 className="cartao__titulo">Onde as pessoas estão</h2>
           <p className="cartao__nota">
-            {planta.descricao} As áreas coloridas são a circulação pública: corredores, praças
-            e entradas. Clique para abrir a curva do dia.
+            {naPraca
+              ? `${plantaDaPraca.descricao} No térreo esta área aparece tracejada, por ser de
+                 outro pavimento; aqui ela está na planta dela.`
+              : `${planta.descricao} As áreas coloridas são a circulação pública: corredores,
+                 praças e entradas. Clique para abrir a curva do dia.`}
           </p>
         </div>
 
-        <div className="pilulas" role="group" aria-label="Como desenhar as zonas">
-          {[['Mapa de calor', true], ['Por zona', false]].map(([rotulo, ligado]) => (
-            <button
-              key={rotulo}
-              type="button"
-              className="pilula"
-              aria-pressed={suavizado === ligado}
-              onClick={() => setSuavizado(ligado)}
-            >
-              {rotulo}
-            </button>
-          ))}
+        <div className="ferramentas-mapa">
+          {zonaDaPraca && (
+            <div className="abas" role="tablist" aria-label="Pavimento">
+              <button
+                type="button"
+                role="tab"
+                className="aba"
+                aria-selected={pavimento === 'terreo'}
+                onClick={() => setPavimento('terreo')}
+              >
+                <Building2 size={14} /> Térreo
+              </button>
+              <button
+                type="button"
+                role="tab"
+                className="aba"
+                aria-selected={pavimento === 'praca'}
+                onClick={() => setPavimento('praca')}
+              >
+                <Utensils size={14} /> 2º piso
+                {pessoasDe(publicadoDaPraca) !== null && (
+                  <span className="numero" style={{ color: 'var(--tinta-4)', fontWeight: 600 }}>
+                    {numero(pessoasDe(publicadoDaPraca), 0)}
+                  </span>
+                )}
+              </button>
+            </div>
+          )}
+
+          {!naPraca && (
+            <div className="pilulas" role="group" aria-label="Como desenhar as zonas">
+              {[['Mapa de calor', true], ['Por zona', false]].map(([rotulo, ligado]) => (
+                <button
+                  key={rotulo}
+                  type="button"
+                  className="pilula"
+                  aria-pressed={suavizado === ligado}
+                  onClick={() => setSuavizado(ligado)}
+                >
+                  {rotulo}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+
+      {naPraca && <MapaDaPraca planta={plantaDaPraca} zona={zonaDaPraca} vezes={vezesDaPraca} />}
+
+      {!naPraca && (
+        <>
 
       <svg
         viewBox={vista(planta)}
@@ -160,6 +216,8 @@ export default function MallMap() {
       </svg>
 
       <Legenda limiar={state.resumo?.limiar} aoVivo={state.aoVivo} suavizado={suavizado} />
+        </>
+      )}
     </section>
   );
 }
