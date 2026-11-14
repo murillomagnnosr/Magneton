@@ -6,12 +6,16 @@
 // túnel levando a chave. Para o painel nada muda: continua chamando /api/v1/... na
 // própria origem, igual ao proxy do Vite em desenvolvimento.
 //
+// Quem traz /api/v1/... até aqui é o rewrite declarado em vercel.json, que entrega o
+// resto do caminho no parâmetro `rota`. O arquivo tem nome simples de propósito: um
+// arquivo de rota com colchetes no nome não chegou a ser empacotado no envio.
+//
 // Variáveis de ambiente (painel da Vercel, nunca no código):
-//   CAMERA_API_URL  endereço público do túnel, ex.: https://seu-dominio.ngrok-free.app
+//   CAMERA_API_URL  endereço público do túnel, ex.: https://seu-dominio.ngrok-free.dev
 //   CAMERA_API_KEY  a mesma chave configurada em MAPA_CHAVE_LEITURA no servidor
 //
-// Só passa leitura. As rotas de ingestão (/api/ingestao/...) ficam de fora de propósito:
-// quem escreve contagem é o worker, pela rede local, nunca a internet.
+// Só passa leitura, e só dentro de /api/v1. As rotas de ingestão ficam de fora de
+// propósito: quem escreve contagem é o worker, pela rede local, nunca a internet.
 
 export default async function handler(requisicao, resposta) {
   const destino = process.env.CAMERA_API_URL;
@@ -26,21 +30,22 @@ export default async function handler(requisicao, resposta) {
     return resposta.status(405).json({ message: 'Esta ponte só lê dados.' });
   }
 
-  // O caminho chega como ['v1', 'zonas']; o 'api' da frente fica implícito na pasta.
-  const partes = [].concat(requisicao.query.caminho ?? []);
+  const rota = String(requisicao.query.rota ?? '');
+  const partes = rota.split('/').filter(Boolean);
 
-  if (partes[0] !== 'v1') {
+  // '..' subiria para fora de /api/v1; segmento vazio viraria barra dobrada.
+  if (partes.length === 0 || partes.some((parte) => parte === '..')) {
     return resposta.status(404).json({ message: 'Rota fora da API de transmissão.' });
   }
 
   const query = new URLSearchParams();
   for (const [chave, valor] of Object.entries(requisicao.query)) {
-    if (chave !== 'caminho') {
+    if (chave !== 'rota') {
       query.append(chave, valor);
     }
   }
 
-  const url = `${destino.replace(/\/$/, '')}/api/${partes.map(encodeURIComponent).join('/')}`
+  const url = `${destino.replace(/\/$/, '')}/api/v1/${partes.map(encodeURIComponent).join('/')}`
     + (query.size ? `?${query}` : '');
 
   let doServidor;

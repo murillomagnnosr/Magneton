@@ -3,8 +3,14 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/v1/:rota*",
+      "destination": "/api/ponte?rota=:rota*"
+    }
+  ],
   "functions": {
-    "api/[...caminho].js": {
+    "api/ponte.js": {
       "maxDuration": 15
     }
   }
